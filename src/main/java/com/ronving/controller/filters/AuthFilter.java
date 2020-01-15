@@ -1,7 +1,7 @@
 package com.ronving.controller.filters;
 
 import com.ronving.dao.UserDAO;
-import com.ronving.model.ROLE;
+import com.ronving.model.roles.ROLE;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

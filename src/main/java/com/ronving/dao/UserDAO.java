@@ -1,21 +1,21 @@
 package com.ronving.dao;
 
-import com.ronving.model.ROLE;
-import com.ronving.model.User;
+import com.ronving.model.roles.ROLE;
+import com.ronving.model.Account;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO {
 
-    private final List<User> store = new ArrayList<>();
+    private final List<Account> store = new ArrayList<>();
 
-    public User getUserById(int id) {
+    public Account getUserById(int id) {
 
-        User result = new User();
+        Account result = new Account();
         result.setId(-1);
 
-        for (User user : store) {
+        for (Account user : store) {
             if (user.getId() == id) {
                 result = user;
             }
@@ -24,12 +24,12 @@ public class UserDAO {
         return result;
     }
 
-    public User getUserByLoginPassword(final String login, final String password) {
+    public Account getUserByLoginPassword(final String login, final String password) {
 
-        User result = new User();
+        Account result = new Account();
         result.setId(-1);
 
-        for (User user : store) {
+        for (Account user : store) {
             if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
                 result = user;
             }
@@ -38,9 +38,9 @@ public class UserDAO {
         return result;
     }
 
-    public boolean addNewUser(final User user) {
+    public boolean addNewUser(final Account user) {
 
-        for (User u : store) {
+        for (Account u : store) {
             if (u.getLogin().equals(user.getLogin()) && u.getPassword().equals(user.getPassword())) {
                 return false;
             }
@@ -52,7 +52,7 @@ public class UserDAO {
     public ROLE getRoleByLoginPassword(final String login, final String password) {
         ROLE result = ROLE.UNKNOWN;
 
-        for (User user : store) {
+        for (Account user : store) {
             if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
                 result = user.getRole();
             }
@@ -65,7 +65,7 @@ public class UserDAO {
 
         boolean result = false;
 
-        for (User user : store) {
+        for (Account user : store) {
             if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
                 result = true;
                 break;

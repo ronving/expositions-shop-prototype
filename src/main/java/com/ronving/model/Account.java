@@ -1,16 +1,18 @@
 package com.ronving.model;
 
-public class User {
+import com.ronving.model.roles.ROLE;
+
+public class Account {
     private int id;
     private String login;
     private String password;
     private int balance;
     private ROLE role;
 
-    public User() {
+    public Account() {
     }
 
-    public User(int id, String login, String password, int balance, ROLE role) {
+    public Account(int id, String login, String password, int balance, ROLE role) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -19,7 +21,7 @@ public class User {
     }
 
     //account without balance
-    public User(int id, String login, String password, ROLE role) {
+    public Account(int id, String login, String password, ROLE role) {
         this.id = id;
         this.login = login;
         this.password = password;

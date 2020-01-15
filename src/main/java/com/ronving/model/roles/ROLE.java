@@ -1,4 +1,4 @@
-package com.ronving.model;
+package com.ronving.model.roles;
 
 public enum ROLE {
     USER, ADMIN, UNKNOWN
