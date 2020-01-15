@@ -9,8 +9,8 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.ronving.model.User.ROLE.ADMIN;
-import static com.ronving.model.User.ROLE.USER;
+import static com.ronving.model.ROLE.ADMIN;
+import static com.ronving.model.ROLE.USER;
 
 @WebListener
 public class ContextListener implements ServletContextListener {
@@ -24,8 +24,8 @@ public class ContextListener implements ServletContextListener {
 
         dao = new AtomicReference<>(new UserDAO());
 
-        dao.get().add(new User(1, "Pavel", "1", ADMIN));
-        dao.get().add(new User(2, "Egor", "1", USER));
+        dao.get().addNewUser(new User(1, "Pavel", "1", ADMIN));
+        dao.get().addNewUser(new User(2, "Egor", "1", USER));
 
         final ServletContext servletContext =
                 servletContextEvent.getServletContext();

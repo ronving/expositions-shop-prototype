@@ -5,7 +5,6 @@ import java.util.Date;
 public class Hall {
     private int id;
     private String theme;
-    private String adress; // Hall name
     private int ticketPrice;
     private Date dateFrom;
     private Date dateTo;
@@ -13,10 +12,9 @@ public class Hall {
     public Hall() {
     }
 
-    public Hall(int id, String theme, String adress, int ticketPrice, Date dateFrom, Date dateTo) {
+    public Hall(int id, String theme, int ticketPrice, Date dateFrom, Date dateTo) {
         this.id = id;
         this.theme = theme;
-        this.adress = adress;
         this.ticketPrice = ticketPrice;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
@@ -36,14 +34,6 @@ public class Hall {
 
     public void setTheme(String theme) {
         this.theme = theme;
-    }
-
-    public String getAdress() {
-        return adress;
-    }
-
-    public void setAdress(String adress) {
-        this.adress = adress;
     }
 
     public int getTicketPrice() {

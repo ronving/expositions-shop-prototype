@@ -66,7 +66,4 @@ public class User {
         this.balance = balance;
     }
 
-    public enum ROLE {
-        USER, ADMIN, UNKNOWN
-    }
 }

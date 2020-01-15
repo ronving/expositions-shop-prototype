@@ -1,7 +1,7 @@
 package com.ronving.controller.filters;
 
 import com.ronving.dao.UserDAO;
-import com.ronving.model.User;
+import com.ronving.model.ROLE;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -42,14 +42,14 @@ public class AuthFilter implements Filter {
                 nonNull(session.getAttribute("login")) &&
                 nonNull(session.getAttribute("password"))) {
 
-            final User.ROLE role = (User.ROLE) session.getAttribute("role");
+            final ROLE role = (ROLE) session.getAttribute("role");
 
             moveToMenu(req, res, role);
 
 
         } else if (dao.get().userIsExist(login, password)) {
 
-            final User.ROLE role = dao.get().getRoleByLoginPassword(login, password);
+            final ROLE role = dao.get().getRoleByLoginPassword(login, password);
 
             req.getSession().setAttribute("password", password);
             req.getSession().setAttribute("login", login);
@@ -59,7 +59,7 @@ public class AuthFilter implements Filter {
 
         } else {
 
-            moveToMenu(req, res, User.ROLE.UNKNOWN);
+            moveToMenu(req, res, ROLE.UNKNOWN);
         }
     }
 
@@ -70,15 +70,15 @@ public class AuthFilter implements Filter {
      */
     private void moveToMenu(final HttpServletRequest req,
                             final HttpServletResponse res,
-                            final User.ROLE role)
+                            final ROLE role)
             throws ServletException, IOException {
 
 
-        if (role.equals(User.ROLE.ADMIN)) {
+        if (role.equals(ROLE.ADMIN)) {
 
             req.getRequestDispatcher("/WEB-INF/view/admin_menu.jsp").forward(req, res);
 
-        } else if (role.equals(User.ROLE.USER)) {
+        } else if (role.equals(ROLE.USER)) {
 
             req.getRequestDispatcher("/WEB-INF/view/user_menu.jsp").forward(req, res);
 
