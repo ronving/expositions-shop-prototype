@@ -1,5 +1,6 @@
 package com.ronving.dao;
 
+import com.ronving.model.ROLE;
 import com.ronving.model.User;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ public class UserDAO {
 
     private final List<User> store = new ArrayList<>();
 
-    public User getById(int id) {
+    public User getUserById(int id) {
 
         User result = new User();
         result.setId(-1);
@@ -37,7 +38,7 @@ public class UserDAO {
         return result;
     }
 
-    public boolean add(final User user) {
+    public boolean addNewUser(final User user) {
 
         for (User u : store) {
             if (u.getLogin().equals(user.getLogin()) && u.getPassword().equals(user.getPassword())) {
@@ -48,8 +49,8 @@ public class UserDAO {
         return store.add(user);
     }
 
-    public User.ROLE getRoleByLoginPassword(final String login, final String password) {
-        User.ROLE result = User.ROLE.UNKNOWN;
+    public ROLE getRoleByLoginPassword(final String login, final String password) {
+        ROLE result = ROLE.UNKNOWN;
 
         for (User user : store) {
             if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
