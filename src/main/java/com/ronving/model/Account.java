@@ -10,6 +10,7 @@ public class Account {
     private ROLE role;
 
     public Account() {
+        role = ROLE.UNKNOWN;
     }
 
     public Account(int id, String login, String password, int balance, ROLE role) {
@@ -56,8 +57,8 @@ public class Account {
         return role;
     }
 
-    public void setRole(ROLE role) {
-        this.role = role;
+    public void setRole() {
+        this.role = ROLE.USER;
     }
 
     public int getBalance() {
