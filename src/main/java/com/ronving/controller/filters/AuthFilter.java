@@ -1,13 +1,13 @@
 package com.ronving.controller.filters;
 
-import com.ronving.dao.UserDAO;
+import com.ronving.dao.MySQLUserDAO;
 import com.ronving.model.roles.ROLE;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -33,8 +33,8 @@ public class AuthFilter implements Filter {
         final String password = req.getParameter("password");
 
         @SuppressWarnings("unchecked")
-        final AtomicReference<UserDAO> dao = (AtomicReference<UserDAO>) req.getServletContext().getAttribute("dao");
-
+        final AtomicReference<MySQLUserDAO> dao = (AtomicReference<MySQLUserDAO>) req.getServletContext().getAttribute("dao");
+        //final AtomicReference<MySQLUserDAO> dao = new AtomicReference<>(new MySQLUserDAO());
         final HttpSession session = req.getSession();
 
         //Logged user.
@@ -49,7 +49,7 @@ public class AuthFilter implements Filter {
 
         } else if (dao.get().userIsExist(login, password)) {
 
-            final ROLE role = dao.get().getRoleByLoginPassword(login, password);
+            final ROLE role = dao.get().getRoleByLogin(login, password);
 
             req.getSession().setAttribute("password", password);
             req.getSession().setAttribute("login", login);

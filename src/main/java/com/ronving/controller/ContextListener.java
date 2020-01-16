@@ -1,7 +1,6 @@
 package com.ronving.controller;
 
-import com.ronving.dao.UserDAO;
-import com.ronving.model.Account;
+import com.ronving.dao.MySQLUserDAO;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -9,23 +8,21 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.ronving.model.roles.ROLE.ADMIN;
-import static com.ronving.model.roles.ROLE.USER;
-
 @WebListener
 public class ContextListener implements ServletContextListener {
     /**
-     * Fake database connector.
+     * TRUEEEEEE database connector.
      */
-    private AtomicReference<UserDAO> dao;
+    private AtomicReference<MySQLUserDAO> dao;
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
 
-        dao = new AtomicReference<>(new UserDAO());
+        dao = new AtomicReference<>(new MySQLUserDAO());
 
-        dao.get().addNewUser(new Account(1, "Pavel", "1", ADMIN));
-        dao.get().addNewUser(new Account(2, "Egor", "1", USER));
+
+        //dao.get().addNewUser(new Account(1, "admin", "admin",9999, ADMIN));
+        //dao.get().addNewUser(new Account(2, "user", "user",0, USER));
 
         final ServletContext servletContext =
                 servletContextEvent.getServletContext();
