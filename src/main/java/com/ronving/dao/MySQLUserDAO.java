@@ -3,9 +3,13 @@ package com.ronving.dao;
 import com.ronving.dao.interfaces.IDataSourceManager;
 import com.ronving.dao.interfaces.UserDAO;
 import com.ronving.model.Account;
+import com.ronving.model.builders.AccountBuilder;
 import com.ronving.model.roles.ROLE;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class MySQLUserDAO implements UserDAO {
     private IDataSourceManager dataSourceManager;
@@ -13,7 +17,7 @@ public class MySQLUserDAO implements UserDAO {
     private static final String FIND_ACCOUNT = "SELECT * FROM accounts WHERE login=? AND password=?";
     private static final String FIND_LOGIN = "SELECT * FROM accounts WHERE login=?";
     private static final String GET_ROLE = "SELECT * FROM accounts WHERE login=?";
-    private static final String CREATE_ACCOUNT = "INSERT INTO accounts" + "(id,login,password,balance,role) " + "VALUES(?,?,?,?,?)";
+    private static final String CREATE_ACCOUNT = "INSERT INTO accounts(id,login,password,balance,role) VALUES(?,?,?,?,?)";
 
     public MySQLUserDAO() {
         this.dataSourceManager = DataSourceManager.getInstance();
@@ -33,10 +37,7 @@ public class MySQLUserDAO implements UserDAO {
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                account.setId(resultSet.getInt("id"));
-                account.setLogin(resultSet.getString("login"));
-                account.setPassword(resultSet.getString("password"));
-                account.setRole();
+                account = buildAccount(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,12 +53,13 @@ public class MySQLUserDAO implements UserDAO {
             preparedStatement.setString(1, login);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                String result = resultSet.getString("role");
-                if (result.equals("USER")) {
-                    role = ROLE.USER;
-                } else if (result.equals("ADMIN")) {
-                    role = ROLE.ADMIN;
-                }
+//                String result = resultSet.getString("role");
+//                if (result.equals("USER")) {
+//                    role = ROLE.USER;
+//                } else if (result.equals("ADMIN")) {
+//                    role = ROLE.ADMIN;
+//                }
+                role = identifyRole(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -121,12 +123,29 @@ public class MySQLUserDAO implements UserDAO {
         return created;
     }
 
-    private void prepareAccount(PreparedStatement preparedAccount, Account account) throws SQLException {
+    private ROLE identifyRole(ResultSet resultSet) throws SQLException {
+        String result = resultSet.getString("role");
+        if (result.equals("ADMIN")) {
+            return ROLE.ADMIN;
+        } else {
+            return ROLE.USER;
+        }
+    }
 
+    private void prepareAccount(PreparedStatement preparedAccount, Account account) throws SQLException {
         preparedAccount.setInt(1, account.getId());
         preparedAccount.setString(2, account.getLogin());
         preparedAccount.setString(3, account.getPassword());
         preparedAccount.setInt(4, account.getBalance());
         preparedAccount.setString(5, account.getRole().getString());
+    }
+
+    private Account buildAccount(ResultSet resultSet) throws SQLException {
+        Account account = new AccountBuilder()
+                .setId(resultSet.getInt("id"))
+                .setLogin(resultSet.getString("login"))
+                .setPassword(resultSet.getString("password"))
+                .setRole().build();
+        return account;
     }
 }

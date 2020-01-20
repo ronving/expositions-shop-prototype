@@ -13,6 +13,13 @@ public class Account {
         role = ROLE.UNKNOWN;
     }
 
+    public Account(String login, String password, int balance, ROLE role) {
+        this.login = login;
+        this.password = password;
+        this.balance = balance;
+        this.role = role;
+    }
+
     public Account(int id, String login, String password, int balance, ROLE role) {
         this.id = id;
         this.login = login;

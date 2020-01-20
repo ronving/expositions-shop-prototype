@@ -21,8 +21,8 @@ public class ContextListener implements ServletContextListener {
         dao = new AtomicReference<>(new MySQLUserDAO());
 
 
-        //dao.get().addNewUser(new Account(1, "admin", "admin",9999, ADMIN));
-        //dao.get().addNewUser(new Account(2, "user", "user",0, USER));
+        //dao.get().addNewUser(new Account("admin", "admin",9999, ADMIN));
+        //dao.get().addNewUser(new Account("user", "user",0, USER));
 
         final ServletContext servletContext =
                 servletContextEvent.getServletContext();

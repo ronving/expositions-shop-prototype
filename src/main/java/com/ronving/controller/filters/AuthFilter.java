@@ -34,7 +34,6 @@ public class AuthFilter implements Filter {
 
         @SuppressWarnings("unchecked")
         final AtomicReference<MySQLUserDAO> dao = (AtomicReference<MySQLUserDAO>) req.getServletContext().getAttribute("dao");
-        //final AtomicReference<MySQLUserDAO> dao = new AtomicReference<>(new MySQLUserDAO());
         final HttpSession session = req.getSession();
 
         //Logged user.
