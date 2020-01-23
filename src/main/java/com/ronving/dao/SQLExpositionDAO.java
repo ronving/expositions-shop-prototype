@@ -1,8 +1,9 @@
 package com.ronving.dao;
 
-import com.ronving.dao.interfaces.ExpositionDAO;
 import com.ronving.model.Exposition;
 import com.ronving.model.builders.ExpositionBuilder;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,8 +12,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLExpositionDAO implements ExpositionDAO {
+public class SQLExpositionDAO implements com.ronving.dao.interfaces.ExpositionDAO {
     private DataSourceManager dataSourceManager;
+
+    final static Logger LOGGER = Logger.getLogger(SQLExpositionDAO.class);
 
     private static String FIND_ALL = "SELECT * FROM expositions";
     private static String FIND_THEMES = "SELECT DISTINCT theme FROM expositions";
@@ -35,7 +38,7 @@ public class SQLExpositionDAO implements ExpositionDAO {
                 expositions.add(buildExposition(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         }
         return expositions;
     }
@@ -55,7 +58,7 @@ public class SQLExpositionDAO implements ExpositionDAO {
                 themes.add(resultSet.getString("theme"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         }
         return themes;
     }
@@ -70,7 +73,7 @@ public class SQLExpositionDAO implements ExpositionDAO {
                 expositions.add(buildExposition(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         }
         return expositions;
     }
@@ -84,7 +87,7 @@ public class SQLExpositionDAO implements ExpositionDAO {
             preparedStatement.executeUpdate();
             created = true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         }
         return created;
     }
@@ -99,7 +102,7 @@ public class SQLExpositionDAO implements ExpositionDAO {
             preparedStatement.executeUpdate();
             updated = true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         }
         return updated;
     }
@@ -113,7 +116,7 @@ public class SQLExpositionDAO implements ExpositionDAO {
             preparedStatement.executeUpdate();
             deleted = true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         }
         return deleted;
     }

@@ -3,13 +3,17 @@ package com.ronving.dao;
 import com.ronving.dao.interfaces.HallDAO;
 import com.ronving.model.Hall;
 import com.ronving.model.builders.HallBuilder;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MySQLHallDAO implements HallDAO {
+public class SQLHallDAO implements HallDAO {
     private DataSourceManager dataSourceManager;
+
+    final static Logger LOGGER = Logger.getLogger(SQLHallDAO.class);
 
     private static String FIND_ALL = "SELECT * FROM halls";
     private static String FIND_HALL = "SELECT * FROM halls WHERE id=?";
@@ -17,7 +21,7 @@ public class MySQLHallDAO implements HallDAO {
     private static final String UPDATE_HALL = "UPDATE halls SET theme = ?, ticket_price = ?, date_from = ?, date_to = ? WHERE id = ?";
     private static final String DELETE_HALL = "DELETE FROM halls WHERE id = ?";
 
-    public MySQLHallDAO() {
+    public SQLHallDAO() {
         dataSourceManager = DataSourceManager.getInstance();
     }
 
@@ -31,7 +35,7 @@ public class MySQLHallDAO implements HallDAO {
                 halls.add(buildHall(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         }
         return halls;
     }
@@ -46,7 +50,7 @@ public class MySQLHallDAO implements HallDAO {
                 hall = buildHall(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         }
         return hall;
     }
@@ -61,7 +65,7 @@ public class MySQLHallDAO implements HallDAO {
             preparedStatement.executeUpdate();
             created = true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         }
         return created;
     }
@@ -76,7 +80,7 @@ public class MySQLHallDAO implements HallDAO {
             preparedStatement.executeUpdate();
             updated = true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         }
         return updated;
     }
@@ -90,7 +94,7 @@ public class MySQLHallDAO implements HallDAO {
             preparedStatement.executeUpdate();
             deleted = true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         }
         return deleted;
     }

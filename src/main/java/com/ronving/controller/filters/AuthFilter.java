@@ -1,6 +1,6 @@
 package com.ronving.controller.filters;
 
-import com.ronving.dao.MySQLUserDAO;
+import com.ronving.dao.SQLAccountDAO;
 import com.ronving.model.roles.ROLE;
 
 import javax.servlet.*;
@@ -33,7 +33,7 @@ public class AuthFilter implements Filter {
         final String password = req.getParameter("password");
 
         @SuppressWarnings("unchecked")
-        final AtomicReference<MySQLUserDAO> dao = (AtomicReference<MySQLUserDAO>) req.getServletContext().getAttribute("dao");
+        final AtomicReference<SQLAccountDAO> dao = (AtomicReference<SQLAccountDAO>) req.getServletContext().getAttribute("dao");
         final HttpSession session = req.getSession();
 
         //Logged user.
@@ -83,7 +83,7 @@ public class AuthFilter implements Filter {
 
         } else {
 
-            req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, res);
+            req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req,res);
         }
     }
 

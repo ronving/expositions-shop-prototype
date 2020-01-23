@@ -1,25 +1,29 @@
 package com.ronving.dao;
 
 import com.ronving.dao.interfaces.IDataSourceManager;
-import com.ronving.dao.interfaces.UserDAO;
+import com.ronving.dao.interfaces.AccountDAO;
 import com.ronving.model.Account;
 import com.ronving.model.builders.AccountBuilder;
 import com.ronving.model.roles.ROLE;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MySQLUserDAO implements UserDAO {
+public class SQLAccountDAO implements AccountDAO {
     private IDataSourceManager dataSourceManager;
+
+    final static Logger LOGGER = Logger.getLogger(SQLAccountDAO.class);
 
     private static final String FIND_ACCOUNT = "SELECT * FROM accounts WHERE login=? AND password=?";
     private static final String FIND_LOGIN = "SELECT * FROM accounts WHERE login=?";
     private static final String GET_ROLE = "SELECT * FROM accounts WHERE login=?";
     private static final String CREATE_ACCOUNT = "INSERT INTO accounts(id,login,password,balance,role) VALUES(?,?,?,?,?)";
 
-    public MySQLUserDAO() {
+    public SQLAccountDAO() {
         this.dataSourceManager = DataSourceManager.getInstance();
     }
 
@@ -40,7 +44,7 @@ public class MySQLUserDAO implements UserDAO {
                 account = buildAccount(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         }
         return account;
     }
@@ -62,7 +66,7 @@ public class MySQLUserDAO implements UserDAO {
                 role = identifyRole(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         }
         return role;
     }
@@ -76,7 +80,7 @@ public class MySQLUserDAO implements UserDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             isExist = resultSet.next();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         }
         return isExist;
     }
@@ -100,24 +104,22 @@ public class MySQLUserDAO implements UserDAO {
                     connection.rollback();
                 }
             } catch (SQLException sqlExc) {
-                e.printStackTrace();
+                LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
             }
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         } finally {
             try {
-
                 if (preparedAccount != null) {
                     preparedAccount.close();
                 }
-
-
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
             }
 
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
             }
         }
         return created;

@@ -18,6 +18,7 @@
     <title>Login</title>
 </head>
 <body>
+
 <h2>
     <fmt:message key="welcome" />
 </h2>

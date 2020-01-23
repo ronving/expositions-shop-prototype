@@ -3,22 +3,22 @@ package com.ronving.model;
 import java.util.Date;
 
 public class Order {
-    private String orderKey;
+    private int orderKey;
     private Date dateValid;
 
     public Order() {
     }
 
-    public Order(String orderKey, Date dateValid) {
+    public Order(int orderKey, Date dateValid) {
         this.orderKey = orderKey;
         this.dateValid = dateValid;
     }
 
-    public String getOrderKey() {
+    public int getOrderKey() {
         return orderKey;
     }
 
-    public void setOrderKey(String orderKey) {
+    public void setOrderKey(int orderKey) {
         this.orderKey = orderKey;
     }
 
