@@ -37,8 +37,8 @@
 
             <form method="post" class="w3-container w3-center" style="width: 25%; text-align: center; display: inline-block;">
                 <input class="w3-input w3-border w3-center" style="margin-bottom: 5px;" type="text" required placeholder="<fmt:message key="login"/>" name="login">
-                <input class="w3-input w3-border w3-center" type="password" required placeholder="<fmt:message key="password"/>" name="password"><br>
-                <input class="w3-btn w3-blue w3-center" type="submit" value="<fmt:message key="signIn" />">
+                <input class="w3-input w3-border w3-center" style="margin-bottom: 10px;" type="password" required placeholder="<fmt:message key="password"/>" name="password">
+                <input class="w3-button w3-black w3-hover-blue w3-center" style="padding: 10px 100px;" type="submit" value="<fmt:message key="signIn" />">
             </form>
 
     </div>
