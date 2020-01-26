@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page session="true" %>
 <fmt:setLocale value="${param.lang}"/>
 <fmt:setBundle basename="resources"/>
 <html>
@@ -41,16 +42,16 @@
         </div>
     </div>
 
-    <!--PAGINATION-->
-    <div class="w3-center w3-opacity">
-        <div class="w3-bar">
-            <a href="#" class="w3-bar-item w3-button">&laquo;</a>
-            <a href="#" class="w3-button">1</a>
-            <a href="#" class="w3-button">2</a>
-            <a href="#" class="w3-button">3</a>
-            <a href="#" class="w3-button">4</a>
-            <a href="#" class="w3-button">&raquo;</a>
+    <div class="w3-row">
+        <div class="w3-col s3 w3-opacity w3-center w3-padding-16">
+            <img class="w3-image" style="max-width: 50%;" src="${pageContext.request.contextPath}/resources/user.png">
+            <h2>Login: <c:out value="${sessionScope.account.getLogin()}"/></h2>
+            <h2>Id: <c:out value="${sessionScope.account.getId()}"/></h2>
+            <h2>Role: <c:out value="${sessionScope.account.getRole()}"/></h2>
+            <h2>Balance: <c:out value="${sessionScope.account.getBalance()}"/></h2>
+            <a href="<c:url value="/donate"/>" class="w3-button w3-black w3-hover-blue">Add credits</a>
         </div>
+        <div class="w3-col s9 w3-dark-grey w3-opacity w3-center">INFO</div>
     </div>
 
     <c:import url="parts/footer.jsp"/>

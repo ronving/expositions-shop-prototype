@@ -40,6 +40,18 @@
         </div>
     </div>
 
+    <!--PAGINATION-->
+    <div class="w3-center w3-opacity">
+        <div class="w3-bar">
+            <a href="#" class="w3-bar-item w3-button">&laquo;</a>
+            <a href="#" class="w3-button">1</a>
+            <a href="#" class="w3-button">2</a>
+            <a href="#" class="w3-button">3</a>
+            <a href="#" class="w3-button">4</a>
+            <a href="#" class="w3-button">&raquo;</a>
+        </div>
+    </div>
+
     <c:import url="parts/footer.jsp"/>
 </div>
 </body>

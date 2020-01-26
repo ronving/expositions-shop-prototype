@@ -4,9 +4,10 @@ import com.ronving.model.roles.ROLE;
 import com.ronving.model.Account;
 
 public interface AccountDAO {
-    Account getUserById(final int id);
-    Account getUserByLoginPassword(String login, String password);
+    Account getAccountById(final int id);
+    Account getAccountByLoginPassword(String login, String password);
     ROLE getRoleByLogin(String login, String password);
-    boolean userIsExist(String login, String password);
-    boolean addNewUser(Account account);
+    boolean accountIsExist(String login, String password);
+    boolean addNewAccount(Account account);
+    boolean updateAccount(Account account, int cash);
 }

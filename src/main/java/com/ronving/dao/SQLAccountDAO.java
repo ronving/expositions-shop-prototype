@@ -22,18 +22,19 @@ public class SQLAccountDAO implements AccountDAO {
     private static final String FIND_LOGIN = "SELECT * FROM accounts WHERE login=?";
     private static final String GET_ROLE = "SELECT * FROM accounts WHERE login=?";
     private static final String CREATE_ACCOUNT = "INSERT INTO accounts(id,login,password,balance,role) VALUES(?,?,?,?,?)";
+    private static final String ADD_CREDITS = "UPDATE accounts SET login=?, password=?, balance=?, role=? WHERE id=?";
 
     public SQLAccountDAO() {
         this.dataSourceManager = DataSourceManager.getInstance();
     }
 
     @Override
-    public Account getUserById(int id) {
+    public Account getAccountById(int id) {
         return null;
     }
 
     @Override
-    public Account getUserByLoginPassword(String login, String password) {
+    public Account getAccountByLoginPassword(String login, String password) {
         Account account = new Account();
         try (Connection connection = dataSourceManager.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ACCOUNT);
@@ -72,7 +73,7 @@ public class SQLAccountDAO implements AccountDAO {
     }
 
     @Override
-    public boolean userIsExist(String login, String password) {
+    public boolean accountIsExist(String login, String password) {
         boolean isExist = false;
         try (Connection connection = dataSourceManager.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_LOGIN);
@@ -86,7 +87,7 @@ public class SQLAccountDAO implements AccountDAO {
     }
 
     @Override
-    public boolean addNewUser(Account account) {
+    public boolean addNewAccount(Account account) {
         boolean created = false;
         PreparedStatement preparedAccount = null;
         Connection connection = null;
@@ -125,6 +126,23 @@ public class SQLAccountDAO implements AccountDAO {
         return created;
     }
 
+    @Override
+    public boolean updateAccount(Account account, int credits) {
+        boolean payment = false;
+        try (Connection connection = dataSourceManager.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(ADD_CREDITS);
+            preparedStatement.setString(1, account.getLogin());
+            preparedStatement.setString(2, account.getPassword());
+            preparedStatement.setInt(3, account.getBalance()+credits);
+            preparedStatement.setString(4, account.getRole().getString());
+            preparedStatement.setInt(5, account.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
+        }
+        return payment;
+    }
+
     private ROLE identifyRole(ResultSet resultSet) throws SQLException {
         String result = resultSet.getString("role");
         if (result.equals("ADMIN")) {
@@ -147,6 +165,7 @@ public class SQLAccountDAO implements AccountDAO {
                 .setId(resultSet.getInt("id"))
                 .setLogin(resultSet.getString("login"))
                 .setPassword(resultSet.getString("password"))
+                .setBalance(resultSet.getInt("balance"))
                 .setRole().build();
         return account;
     }

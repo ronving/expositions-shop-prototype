@@ -1,6 +1,7 @@
 package com.ronving.controller.filters;
 
 import com.ronving.dao.SQLAccountDAO;
+import com.ronving.model.Account;
 import com.ronving.model.roles.ROLE;
 
 import javax.servlet.*;
@@ -46,14 +47,15 @@ public class AuthFilter implements Filter {
             moveToMenu(req, res, role);
 
 
-        } else if (dao.get().userIsExist(login, password)) {
+        } else if (dao.get().accountIsExist(login, password)) {
 
+            Account account = dao.get().getAccountByLoginPassword(login, password);
             final ROLE role = dao.get().getRoleByLogin(login, password);
 
             req.getSession().setAttribute("password", password);
             req.getSession().setAttribute("login", login);
             req.getSession().setAttribute("role", role);
-
+            req.getSession().setAttribute("account", account);
             moveToMenu(req, res, role);
 
         } else {

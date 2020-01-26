@@ -20,6 +20,11 @@ public class AccountBuilder {
         return this;
     }
 
+    public AccountBuilder setBalance(int balance) {
+        account.setBalance(balance);
+        return this;
+    }
+
     public AccountBuilder setRole() {
         account.setRole();
         return this;

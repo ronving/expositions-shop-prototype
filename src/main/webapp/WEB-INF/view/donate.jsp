@@ -1,0 +1,105 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: getlight
+  Date: 25.01.2020
+  Time: 15:41
+  To change this template use File | Settings | File Templates.
+--%>
+<%request.setCharacterEncoding("UTF-8");%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
+<%@ page session="true" %>
+<fmt:setLocale value="${param.lang}"/>
+<fmt:setBundle basename="resources"/>
+<html>
+<head>
+    <title>Donate</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
+    <style>
+        .w3-lobster {
+            font-family: "Lobster", serif;
+        }
+    </style>
+</head>
+<body>
+<div class="w3-content" style="max-width:1500px">
+    <c:import url="parts/header.jsp"/>
+
+    <div class="w3-panel w3-center w3-opacity" style="padding:30px 16px 50px 16px">
+
+        <h1>Confirm Purchase</h1>
+        <c:url var="post_url"  value="/donate" />
+        <form method="post" action="${post_url}" class="w3-container w3-center" style="max-width: 50%; text-align: center; display: inline-block;">
+            <div class="w3-row-padding" style="margin-bottom: 10px;">
+                <div class="w3-twothird">
+                    <b><label class="w3-left">Owner</label></b>
+                    <input class="w3-input w3-border" type="text">
+                </div>
+                <div class="w3-third">
+                    <b><label class="w3-left">CVV</label></b>
+                    <input class="w3-input w3-border" type="text">
+                </div>
+            </div>
+            <div class="w3-row" style="margin-bottom: 10px;">
+                <div class="w3-container">
+                    <b><label class="w3-left">Card Number</label></b>
+                    <input class="w3-input w3-border" type="text">
+                </div>
+            </div>
+            <div class="w3-row-padding" style="margin-bottom: 10px;">
+                <div class="w3-container">
+                <b><label class="w3-left">Expiration Date</label></b>
+                </div>
+            </div>
+            <div class="w3-row" style="margin-bottom: 10px;">
+                <div class="w3-container">
+                    <b><label class="w3-left">Credits</label></b>
+                    <input name="credits" value="0" class="w3-input w3-border" type="text">
+                </div>
+            </div>
+            <div class="w3-row-padding" style="margin-bottom: 10px;">
+
+                <div class=" w3-half">
+                    <select class="w3-select">
+                    <option value="01">January</option>
+                    <option value="02">February </option>
+                    <option value="03">March</option>
+                    <option value="04">April</option>
+                    <option value="05">May</option>
+                    <option value="06">June</option>
+                    <option value="07">July</option>
+                    <option value="08">August</option>
+                    <option value="09">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select></div>
+                <div class=" w3-half">
+                    <select class="w3-select w3-third">
+                    <option value="16"> 2016</option>
+                    <option value="17"> 2017</option>
+                    <option value="18"> 2018</option>
+                    <option value="19"> 2019</option>
+                    <option value="20"> 2020</option>
+                    <option value="21"> 2021</option>
+                </select></div>
+
+
+            </div>
+            <div class="w3-row">
+                <div class="w3-container">
+                    <input class="w3-button w3-block w3-black w3-hover-blue w3-center" style="padding: 10px 100px;" type="submit" value="<fmt:message key="signIn" />">
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <c:import url="parts/footer.jsp"/>
+</div>
+</body>
+</html>
