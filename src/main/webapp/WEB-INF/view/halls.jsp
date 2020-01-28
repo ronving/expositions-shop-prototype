@@ -9,9 +9,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${param.lang}"/>
+<%@ page session="true" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="resources"/>
-<html>
+<html lang="${sessionScope.lang}">
 <head>
     <title>Expositions</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,6 +21,17 @@
     <style>
         .w3-lobster {
             font-family: "Lobster", serif;
+        }
+
+        .w3-half img {
+            opacity: 0.7;
+            margin-bottom: -6px;
+            cursor: pointer
+        }
+
+        .w3-half img:hover {
+            opacity: 1;
+            transition: 0.3s
         }
     </style>
 </head>
@@ -34,74 +46,74 @@
         <div class="w3-padding-32">
             <div class="w3-bar w3-border">
                 <a href="<c:url value="/profile"/>" class="w3-bar-item w3-button"><fmt:message key="profile"/></a>
-                <a href="" class="w3-bar-item w3-button w3-light-grey"><fmt:message key="expositions"/></a>
+                <a href="<c:url value="/exposition"/>" class="w3-bar-item w3-button w3-light-grey"><fmt:message key="expositions"/></a>
                 <a href="<c:url value="/logout"/>" class="w3-bar-item w3-button"><fmt:message key="logout"/></a>
             </div>
         </div>
     </div>
 
-    <div class="w3-container">
-<%--        <c:forEach items = "${sessionScope.halls}" var="i">--%>
-<%--        <h2><c:out value = "${i}"/></h2>--%>
-<%--        </c:forEach>--%>
-        <!-- Photo grid (modal) -->
-        <div class="w3-row-padding">
-            <div class="w3-half">
-                <img src="/w3images/kitchenconcrete.jpg" style="width:100%" onclick="onClick(this)" alt="Concrete meets bricks">
-                <img src="/w3images/livingroom.jpg" style="width:100%" onclick="onClick(this)" alt="Light, white and tight scandinavian design">
-                <img src="/w3images/diningroom.jpg" style="width:100%" onclick="onClick(this)" alt="White walls with designer chairs">
-            </div>
+    <!--PAGINATION-->
+    <div class="w3-center w3-opacity w3-padding-16">
+        <div class="w3-bar">
+            <c:if test="${currentPage != 1}">
+                <a href="?page=${currentPage - 1}" class="w3-bar-item w3-button">&laquo;</a>
+            </c:if>
 
-            <div class="w3-half">
-                <img src="/w3images/atrium.jpg" style="width:100%" onclick="onClick(this)" alt="Windows for the atrium">
-                <img src="/w3images/bedroom.jpg" style="width:100%" onclick="onClick(this)" alt="Bedroom and office in one space">
-                <img src="/w3images/livingroom2.jpg" style="width:100%" onclick="onClick(this)" alt="Scandinavian design">
-            </div>
-        </div>
+            <c:forEach begin="1" end="${sessionScope.pages}" var="i">
+                <c:choose>
+                    <c:when test="${sessionScope.currentPage eq i}">
+                        <a href="" class="w3-button w3-light-gray">${i}</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="?page=${i}" class="w3-button">${i}</a>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
 
-        <!-- Modal for full size images on click-->
-        <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
-            <span class="w3-button w3-black w3-xxlarge w3-display-topright">×</span>
-            <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
-                <img id="img01" class="w3-image">
-                <p id="caption">HELLO WORLD</p>
-                <button class="w3-button w3-red">hello</button>
-            </div>
+            <c:if test="${currentPage lt pages}">
+                <a href="?page=${currentPage + 1}" class="w3-button">&raquo;</a>
+            </c:if>
         </div>
     </div>
 
-    <!--PAGINATION-->
-    <div class="w3-center w3-opacity">
-        <div class="w3-bar">
-            <a href="#" class="w3-bar-item w3-button">&laquo;</a>
-            <a href="#" class="w3-button">1</a>
-            <a href="#" class="w3-button">2</a>
-            <a href="#" class="w3-button">3</a>
-            <a href="#" class="w3-button">4</a>
-            <a href="#" class="w3-button">&raquo;</a>
+    <!--CONTENT-->
+    <div class="w3-container">
+
+        <!-- PHOTO GRID (MODAL) -->
+        <div class="w3-row w3-grayscale-min">
+            <div class="w3-row">
+                <c:forEach var="hall" items="${sessionScope.halls}">
+                    <div class="w3-half">
+                        <img src="${hall.getImgURL()}" style="width:100%"
+                             onclick="onClick(this, ${hall.getDateFrom()}, ${hall.getDateTo()})" alt="${hall.getTheme()}">
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+
+        <!-- MODAL FOR IMAGES ON CLICK-->
+        <div id="modal" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
+            <span class="w3-button w3-black w3-xxlarge w3-display-topright">×</span>
+            <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+                <img id="img" class="w3-image">
+                <h2 id="theme" class="w3-lobster"></h2>
+                <h4 id="details" class="w3-lobster"></h4>
+                <button class="w3-button w3-red"><fmt:message key="details" /></button>
+            </div>
         </div>
     </div>
 
     <c:import url="parts/footer.jsp"/>
 </div>
 <script>
-    // Script to open and close sidebar
-    function w3_open() {
-        document.getElementById("mySidebar").style.display = "block";
-        document.getElementById("myOverlay").style.display = "block";
-    }
-
-    function w3_close() {
-        document.getElementById("mySidebar").style.display = "none";
-        document.getElementById("myOverlay").style.display = "none";
-    }
-
     // Modal Image Gallery
-    function onClick(element) {
-        document.getElementById("img01").src = element.src;
-        document.getElementById("modal01").style.display = "block";
-        var captionText = document.getElementById("caption");
-        captionText.innerHTML = element.alt;
+    function onClick(element, dateFrom, dateTo) {
+        document.getElementById("img").src = element.src;
+        document.getElementById("modal").style.display = "block";
+        var themeText = document.getElementById("theme");
+        var detailsText = document.getElementById("details");
+        themeText.innerHTML = element.alt;
+        detailsText.innerHTML = dateFrom + " - " + dateTo;
     }
 </script>
 </body>

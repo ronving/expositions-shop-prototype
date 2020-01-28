@@ -11,9 +11,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 <%@ page session="true" %>
-<fmt:setLocale value="${param.lang}"/>
+<fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="resources"/>
-<html>
+<html lang="${sessionScope.lang}">
 <head>
     <title>Donate</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,34 +31,34 @@
 
     <div class="w3-panel w3-center w3-opacity" style="padding:30px 16px 50px 16px">
 
-        <h1>Confirm Purchase</h1>
+        <h1><fmt:message key="payment" /></h1>
         <c:url var="post_url"  value="/donate" />
         <form method="post" action="${post_url}" class="w3-container w3-center" style="max-width: 50%; text-align: center; display: inline-block;">
             <div class="w3-row-padding" style="margin-bottom: 10px;">
                 <div class="w3-twothird">
-                    <b><label class="w3-left">Owner</label></b>
+                    <b><label class="w3-left"><fmt:message key="owner" /></label></b>
                     <input class="w3-input w3-border" type="text">
                 </div>
                 <div class="w3-third">
-                    <b><label class="w3-left">CVV</label></b>
+                    <b><label class="w3-left"><fmt:message key="cvv" /></label></b>
                     <input class="w3-input w3-border" type="text">
                 </div>
             </div>
             <div class="w3-row" style="margin-bottom: 10px;">
                 <div class="w3-container">
-                    <b><label class="w3-left">Card Number</label></b>
+                    <b><label class="w3-left"><fmt:message key="card" /></label></b>
                     <input class="w3-input w3-border" type="text">
-                </div>
-            </div>
-            <div class="w3-row-padding" style="margin-bottom: 10px;">
-                <div class="w3-container">
-                <b><label class="w3-left">Expiration Date</label></b>
                 </div>
             </div>
             <div class="w3-row" style="margin-bottom: 10px;">
                 <div class="w3-container">
-                    <b><label class="w3-left">Credits</label></b>
+                    <b><label class="w3-left"><fmt:message key="credits" /></label></b>
                     <input name="credits" value="0" class="w3-input w3-border" type="text">
+                </div>
+            </div>
+            <div class="w3-row" style="margin-bottom: 10px;">
+                <div class="w3-container">
+                    <b><label class="w3-left"><fmt:message key="expiration" /></label></b>
                 </div>
             </div>
             <div class="w3-row-padding" style="margin-bottom: 10px;">
@@ -92,7 +92,7 @@
             </div>
             <div class="w3-row">
                 <div class="w3-container">
-                    <input class="w3-button w3-block w3-black w3-hover-blue w3-center" style="padding: 10px 100px;" type="submit" value="<fmt:message key="signIn" />">
+                    <input class="w3-button w3-block w3-black w3-hover-blue w3-center" style="padding: 10px 100px;" type="submit" value="<fmt:message key="confirm" />">
                 </div>
             </div>
         </form>

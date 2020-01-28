@@ -9,10 +9,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<fmt:setLocale value="${param.lang}"/>
+<%@ page session="true" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="resources"/>
-<html>
+<html lang="${sessionScope.lang}">
 <head>
     <title>Menu</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,8 +34,8 @@
         <h1><fmt:message key="welcome"/> ADMIN!</h1>
         <div class="w3-padding-16">
             <div class="w3-bar w3-border">
-                <a href="" class="w3-bar-item w3-button w3-light-grey"><fmt:message key="profile"/></a>
-                <a href="" class="w3-bar-item w3-button"><fmt:message key="expositions"/></a>
+                <a href="<c:url value="/profile"/>" class="w3-bar-item w3-button w3-light-grey"><fmt:message key="profile"/></a>
+                <a href="<c:url value="/exposition"/>" class="w3-bar-item w3-button"><fmt:message key="expositions"/></a>
                 <a href="<c:url value="/logout"/>" class="w3-bar-item w3-button"><fmt:message key="logout"/></a>
             </div>
         </div>

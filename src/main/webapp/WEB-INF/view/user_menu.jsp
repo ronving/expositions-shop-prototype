@@ -10,9 +10,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="true" %>
-<fmt:setLocale value="${param.lang}"/>
+<fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="resources"/>
-<html>
+<html lang="${sessionScope.lang}">
 <head>
     <title>Menu</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,8 +35,8 @@
 
         <div class="w3-padding-32">
             <div class="w3-bar w3-border">
-                <a href="" class="w3-bar-item w3-button w3-light-grey"><fmt:message key="profile"/></a>
-                <a href="" class="w3-bar-item w3-button"><fmt:message key="expositions"/></a>
+                <a href="<c:url value="/profile"/>" class="w3-bar-item w3-button w3-light-grey"><fmt:message key="profile"/></a>
+                <a href="<c:url value="/exposition"/>" class="w3-bar-item w3-button"><fmt:message key="expositions"/></a>
                 <a href="<c:url value="/logout"/>" class="w3-bar-item w3-button"><fmt:message key="logout"/></a>
             </div>
         </div>
@@ -44,7 +44,7 @@
 
     <div class="w3-row">
         <div class="w3-col s3 w3-opacity w3-center w3-padding-16">
-            <img class="w3-image" style="max-width: 50%;" src="${pageContext.request.contextPath}/resources/user.png">
+            <img class="w3-image" style="max-width: 50%;" src="${pageContext.request.contextPath}/resources/img/user.png">
             <h2>Login: <c:out value="${sessionScope.account.getLogin()}"/></h2>
             <h2>Id: <c:out value="${sessionScope.account.getId()}"/></h2>
             <h2>Role: <c:out value="${sessionScope.account.getRole()}"/></h2>
