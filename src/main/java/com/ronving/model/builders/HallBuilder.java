@@ -33,6 +33,11 @@ public class HallBuilder {
         return this;
     }
 
+    public HallBuilder setImgURL(String imgURL) {
+        hall.setImgURL(imgURL);
+        return this;
+    }
+
     public Hall build() {
         return hall;
     }

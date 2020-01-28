@@ -15,10 +15,11 @@ public class SQLHallDAO implements HallDAO {
 
     final static Logger LOGGER = Logger.getLogger(SQLHallDAO.class);
 
-    private static String FIND_ALL = "SELECT * FROM halls";
+    private static String FIND_ALL = "SELECT * FROM halls LIMIT ?,?";
     private static String FIND_HALL = "SELECT * FROM halls WHERE id=?";
-    private static String CREATE_HALL = "INSERT INTO halls(theme, ticket_price date_from, date_to) VALUES(?,?,?,?)";
-    private static final String UPDATE_HALL = "UPDATE halls SET theme = ?, ticket_price = ?, date_from = ?, date_to = ? WHERE id = ?";
+    private static String COUNT_RECORDS = "SELECT COUNT(*) FROM halls";
+    private static String CREATE_HALL = "INSERT INTO halls(theme, ticket_price, date_from, date_to, img) VALUES(?,?,?,?,?)";
+    private static final String UPDATE_HALL = "UPDATE halls SET theme = ?, ticket_price = ?, date_from = ?, date_to = ?, img = ? WHERE id = ?";
     private static final String DELETE_HALL = "DELETE FROM halls WHERE id = ?";
 
     public SQLHallDAO() {
@@ -26,10 +27,12 @@ public class SQLHallDAO implements HallDAO {
     }
 
     @Override
-    public List<Hall> findAll() {
+    public List<Hall> findAll(int startFrom, int count) {
         List<Hall> halls = new ArrayList<>();
         try (Connection connection = dataSourceManager.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL);
+            preparedStatement.setInt(1, startFrom);
+            preparedStatement.setInt(2, count);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 halls.add(buildHall(resultSet));
@@ -56,6 +59,21 @@ public class SQLHallDAO implements HallDAO {
     }
 
     @Override
+    public int countRecords() {
+        int count = 0;
+        try (Connection connection = dataSourceManager.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(COUNT_RECORDS);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
+        }
+        return count;
+    }
+
+    @Override
     public boolean createHall(Hall hall) {
 
         boolean created = false;
@@ -76,7 +94,7 @@ public class SQLHallDAO implements HallDAO {
         try (Connection connection = dataSourceManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_HALL)) {
             prepareHall(preparedStatement, hall);
-            preparedStatement.setInt(5, hall.getId());
+            preparedStatement.setInt(6, hall.getId());
             preparedStatement.executeUpdate();
             updated = true;
         } catch (SQLException e) {
@@ -106,6 +124,7 @@ public class SQLHallDAO implements HallDAO {
                 .setTicketPrice(resultSet.getInt("ticket_price"))
                 .setDateFrom(resultSet.getDate("date_from"))
                 .setDateTo(resultSet.getDate("date_to"))
+                .setImgURL(resultSet.getString("img"))
                 .build();
         return hall;
     }
@@ -115,5 +134,6 @@ public class SQLHallDAO implements HallDAO {
         preparedStatement.setInt(2, hall.getTicketPrice());
         preparedStatement.setDate(3, (Date) hall.getDateFrom());
         preparedStatement.setDate(4, (Date) hall.getDateTo());
+        preparedStatement.setString(5, hall.getImgURL());
     }
 }
