@@ -13,7 +13,8 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.Objects.nonNull;
-@WebFilter(filterName = "AuthFilter", urlPatterns = { "/" })
+
+@WebFilter(filterName = "AuthFilter", urlPatterns = {"/"})
 public class AuthFilter implements Filter {
 
     @Override
@@ -29,13 +30,22 @@ public class AuthFilter implements Filter {
 
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
+        final HttpSession session = req.getSession();
 
         final String login = req.getParameter("login");
         final String password = req.getParameter("password");
 
-        @SuppressWarnings("unchecked")
-        final AtomicReference<SQLAccountDAO> dao = (AtomicReference<SQLAccountDAO>) req.getServletContext().getAttribute("dao");
-        final HttpSession session = req.getSession();
+        @SuppressWarnings("unchecked") final AtomicReference<SQLAccountDAO> dao = (AtomicReference<SQLAccountDAO>) req.getServletContext().getAttribute("dao");
+
+        //Set locale for session
+        if (req.getParameter("lang") != null) {
+            session.setAttribute("lang", req.getParameter("lang"));
+        }
+
+        //If user logged out
+        if (!nonNull(session)) {
+            res.sendRedirect("/calendar/logout");
+        }
 
         //Logged user.
         if (nonNull(session) &&
@@ -43,9 +53,7 @@ public class AuthFilter implements Filter {
                 nonNull(session.getAttribute("password"))) {
 
             final ROLE role = (ROLE) session.getAttribute("role");
-
-            moveToMenu(req, res, role);
-
+            res.sendRedirect("/calendar/profile");
 
         } else if (dao.get().accountIsExist(login, password)) {
 
@@ -56,39 +64,12 @@ public class AuthFilter implements Filter {
             req.getSession().setAttribute("login", login);
             req.getSession().setAttribute("role", role);
             req.getSession().setAttribute("account", account);
-            moveToMenu(req, res, role);
+            res.sendRedirect("/calendar/profile");
 
         } else {
-
-            moveToMenu(req, res, ROLE.UNKNOWN);
+            req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, res);
         }
     }
-
-    /**
-     * Move user to menu.
-     * If access 'admin' move to admin menu.
-     * If access 'user' move to user menu.
-     */
-    private void moveToMenu(final HttpServletRequest req,
-                            final HttpServletResponse res,
-                            final ROLE role)
-            throws ServletException, IOException {
-
-
-        if (role.equals(ROLE.ADMIN)) {
-
-            req.getRequestDispatcher("/WEB-INF/view/admin_menu.jsp").forward(req, res);
-
-        } else if (role.equals(ROLE.USER)) {
-
-            req.getRequestDispatcher("/WEB-INF/view/user_menu.jsp").forward(req, res);
-
-        } else {
-
-            req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req,res);
-        }
-    }
-
 
     @Override
     public void destroy() {

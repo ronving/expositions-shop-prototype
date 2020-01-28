@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(
@@ -25,12 +26,15 @@ public class PurchaseServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Account account = (Account) req.getSession().getAttribute("account");
-        int credits =  Integer.parseInt(req.getParameter("credits"));
+        final HttpSession session = req.getSession();
+
         SQLAccountDAO dao = new SQLAccountDAO();
+        Account account = (Account) session.getAttribute("account");
+        int credits =  Integer.parseInt(req.getParameter("credits"));
+
         dao.updateAccount(account, credits);
         account.setBalance(account.getBalance()+credits);
-        req.getSession().setAttribute("account", account);
-        req.getRequestDispatcher("/WEB-INF/view/user_menu.jsp").forward(req,resp);
+        session.setAttribute("account", account);
+        resp.sendRedirect("/calendar/profile");
     }
 }
