@@ -38,6 +38,11 @@ public class HallBuilder {
         return this;
     }
 
+    public HallBuilder setDescription(String description) {
+        hall.setDescription(description);
+        return this;
+    }
+
     public Hall build() {
         return hall;
     }

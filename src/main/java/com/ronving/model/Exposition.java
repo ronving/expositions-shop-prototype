@@ -1,25 +1,23 @@
 package com.ronving.model;
 
-import java.net.URL;
-
 public class Exposition {
     private int id;
     private int hallId;
     private String title;
     private String theme;
     private String description;
-//    private URL picture;
+    private String imgURL;
 
     public Exposition() {
     }
 
-    public Exposition(int id, int hallId, String title, String theme, String description, URL image) {
+    public Exposition(int id, int hallId, String title, String theme, String description, String imgURL) {
         this.id = id;
         this.hallId = hallId;
         this.title = title;
         this.theme = theme;
         this.description = description;
-//        this.picture = image;
+        this.imgURL = imgURL;
     }
 
     public int getId() {
@@ -62,11 +60,23 @@ public class Exposition {
         this.description = description;
     }
 
-//    public URL getPicture() {
-//        return picture;
-//    }
-//
-//    public void setPicture(URL picture) {
-//        this.picture = picture;
-//    }
+    public String getImgURL() {
+        return imgURL;
+    }
+
+    public void setImgURL(String imgURL) {
+        this.imgURL = imgURL;
+    }
+
+    @Override
+    public String toString() {
+        return "Exposition{" +
+                "id=" + id +
+                ", hallId=" + hallId +
+                ", title='" + title + '\'' +
+                ", theme='" + theme + '\'' +
+                ", description='" + description + '\'' +
+                ", imgURL='" + imgURL + '\'' +
+                '}';
+    }
 }

@@ -27,6 +27,7 @@
 <body>
 <!--CONTENT-->
 <div class="w3-content" style="max-width:1500px">
+    <!--HEADER-->
     <c:import url="parts/header.jsp"/>
 
     <!--MENU-->
@@ -36,13 +37,15 @@
         <div class="w3-padding-32">
             <div class="w3-bar w3-border">
                 <a href="<c:url value="/profile"/>" class="w3-bar-item w3-button w3-light-grey"><fmt:message key="profile"/></a>
-                <a href="<c:url value="/exposition"/>" class="w3-bar-item w3-button"><fmt:message key="expositions"/></a>
+                <a href="<c:url value="/expositions"/>" class="w3-bar-item w3-button"><fmt:message key="expositions"/></a>
                 <a href="<c:url value="/logout"/>" class="w3-bar-item w3-button"><fmt:message key="logout"/></a>
             </div>
         </div>
     </div>
 
+    <!--ACCOUNT-->
     <div class="w3-row">
+        <!--USER INFO-->
         <div class="w3-col s3 w3-opacity w3-center w3-padding-16">
             <img class="w3-image" style="max-width: 50%;" src="${pageContext.request.contextPath}/resources/img/user.png">
             <h2>Login: <c:out value="${sessionScope.account.getLogin()}"/></h2>
@@ -51,9 +54,12 @@
             <h2>Balance: <c:out value="${sessionScope.account.getBalance()}"/></h2>
             <a href="<c:url value="/donate"/>" class="w3-button w3-black w3-hover-blue">Add credits</a>
         </div>
+
+        <!--ORDERS INFO-->
         <div class="w3-col s9 w3-dark-grey w3-opacity w3-center">INFO</div>
     </div>
 
+    <!--FOOTER-->
     <c:import url="parts/footer.jsp"/>
 </div>
 </body>

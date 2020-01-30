@@ -18,8 +18,8 @@ public class SQLHallDAO implements HallDAO {
     private static String FIND_ALL = "SELECT * FROM halls LIMIT ?,?";
     private static String FIND_HALL = "SELECT * FROM halls WHERE id=?";
     private static String COUNT_RECORDS = "SELECT COUNT(*) FROM halls";
-    private static String CREATE_HALL = "INSERT INTO halls(theme, ticket_price, date_from, date_to, img) VALUES(?,?,?,?,?)";
-    private static final String UPDATE_HALL = "UPDATE halls SET theme = ?, ticket_price = ?, date_from = ?, date_to = ?, img = ? WHERE id = ?";
+    private static String CREATE_HALL = "INSERT INTO halls(theme, ticket_price, date_from, date_to, img, description) VALUES(?,?,?,?,?,?)";
+    private static final String UPDATE_HALL = "UPDATE halls SET theme = ?, ticket_price = ?, date_from = ?, date_to = ?, img = ?, description=? WHERE id = ?";
     private static final String DELETE_HALL = "DELETE FROM halls WHERE id = ?";
 
     public SQLHallDAO() {
@@ -48,6 +48,7 @@ public class SQLHallDAO implements HallDAO {
         Hall hall = new Hall();
         try (Connection connection = dataSourceManager.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_HALL);
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 hall = buildHall(resultSet);
@@ -94,7 +95,7 @@ public class SQLHallDAO implements HallDAO {
         try (Connection connection = dataSourceManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_HALL)) {
             prepareHall(preparedStatement, hall);
-            preparedStatement.setInt(6, hall.getId());
+            preparedStatement.setInt(7, hall.getId());
             preparedStatement.executeUpdate();
             updated = true;
         } catch (SQLException e) {
@@ -125,6 +126,7 @@ public class SQLHallDAO implements HallDAO {
                 .setDateFrom(resultSet.getDate("date_from"))
                 .setDateTo(resultSet.getDate("date_to"))
                 .setImgURL(resultSet.getString("img"))
+                .setDescription(resultSet.getString("description"))
                 .build();
         return hall;
     }
@@ -135,5 +137,6 @@ public class SQLHallDAO implements HallDAO {
         preparedStatement.setDate(3, (Date) hall.getDateFrom());
         preparedStatement.setDate(4, (Date) hall.getDateTo());
         preparedStatement.setString(5, hall.getImgURL());
+        preparedStatement.setString(6, hall.getDescription());
     }
 }

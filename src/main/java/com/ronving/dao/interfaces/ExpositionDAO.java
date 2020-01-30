@@ -8,7 +8,7 @@ public interface ExpositionDAO {
     List<Exposition> findAll();
     Exposition findExposition(String query);
     List<String> findThemes();
-    List<Exposition> findExpositionsByTheme();
+    List<Exposition> findExpositionsByHall(int hallId);
     boolean createExposition(Exposition exposition);
     boolean updateExposition(Exposition exposition);
     boolean deleteExposition(int id);

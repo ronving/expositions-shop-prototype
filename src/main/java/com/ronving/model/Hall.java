@@ -1,11 +1,8 @@
 package com.ronving.model;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Hall {
-    private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     private int id;
     private String theme;
@@ -13,17 +10,19 @@ public class Hall {
     private Date dateFrom;
     private Date dateTo;
     private String imgURL;
+    private String description;
 
     public Hall() {
     }
 
-    public Hall(int id, String theme, int ticketPrice, Date dateFrom, Date dateTo, String imgURL) {
+    public Hall(int id, String theme, int ticketPrice, Date dateFrom, Date dateTo, String imgURL, String description) {
         this.id = id;
         this.theme = theme;
         this.ticketPrice = ticketPrice;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.imgURL = imgURL;
+        this.description = description;
     }
 
     public int getId() {
@@ -55,9 +54,7 @@ public class Hall {
     }
 
     public void setDateFrom(Date dateFrom) {
-
             this.dateFrom = dateFrom;
-
     }
 
     public Date getDateTo() {
@@ -75,4 +72,13 @@ public class Hall {
     public void setImgURL(String imgURL) {
         this.imgURL = imgURL;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 }

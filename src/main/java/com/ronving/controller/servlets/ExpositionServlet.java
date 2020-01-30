@@ -14,7 +14,7 @@ import java.util.List;
 
 @WebServlet(
         name = "ExpositionServlet",
-        urlPatterns = "/exposition")
+        urlPatterns = "/expositions")
 public class ExpositionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

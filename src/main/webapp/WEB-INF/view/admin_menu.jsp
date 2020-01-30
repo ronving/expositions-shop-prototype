@@ -27,6 +27,7 @@
 <body>
 <!--CONTENT-->
 <div class="w3-content" style="max-width:1500px">
+    <!--HEADER-->
     <c:import url="parts/header.jsp"/>
 
     <!--MENU-->
@@ -35,12 +36,13 @@
         <div class="w3-padding-16">
             <div class="w3-bar w3-border">
                 <a href="<c:url value="/profile"/>" class="w3-bar-item w3-button w3-light-grey"><fmt:message key="profile"/></a>
-                <a href="<c:url value="/exposition"/>" class="w3-bar-item w3-button"><fmt:message key="expositions"/></a>
+                <a href="<c:url value="/expositions"/>" class="w3-bar-item w3-button"><fmt:message key="expositions"/></a>
                 <a href="<c:url value="/logout"/>" class="w3-bar-item w3-button"><fmt:message key="logout"/></a>
             </div>
         </div>
     </div>
 
+    <!--FOOTER-->
     <c:import url="parts/footer.jsp"/>
 </div>
 </body>

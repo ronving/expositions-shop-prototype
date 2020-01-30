@@ -30,6 +30,11 @@ public class ExpositionBuilder {
         return this;
     }
 
+    public ExpositionBuilder setImgURL(String imgURL) {
+        exposition.setImgURL(imgURL);
+        return this;
+    }
+
     public Exposition build() {
         return exposition;
     }

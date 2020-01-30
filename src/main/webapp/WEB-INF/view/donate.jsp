@@ -26,79 +26,83 @@
     </style>
 </head>
 <body>
+<!--CONTENT-->
 <div class="w3-content" style="max-width:1500px">
+    <!--HEADER-->
     <c:import url="parts/header.jsp"/>
 
+    <!--PAYMENT FORM-->
     <div class="w3-panel w3-center w3-opacity" style="padding:30px 16px 50px 16px">
 
-        <h1><fmt:message key="payment" /></h1>
-        <c:url var="post_url"  value="/donate" />
-        <form method="post" action="${post_url}" class="w3-container w3-center" style="max-width: 50%; text-align: center; display: inline-block;">
+        <h1><fmt:message key="payment"/></h1>
+        <c:url var="post_url" value="/donate"/>
+        <form method="post" action="${post_url}" class="w3-container w3-center"
+              style="max-width: 50%; text-align: center; display: inline-block;">
             <div class="w3-row-padding" style="margin-bottom: 10px;">
                 <div class="w3-twothird">
-                    <b><label class="w3-left"><fmt:message key="owner" /></label></b>
+                    <b><label class="w3-left"><fmt:message key="owner"/></label></b>
                     <input class="w3-input w3-border" type="text">
                 </div>
                 <div class="w3-third">
-                    <b><label class="w3-left"><fmt:message key="cvv" /></label></b>
+                    <b><label class="w3-left"><fmt:message key="cvv"/></label></b>
                     <input class="w3-input w3-border" type="text">
                 </div>
             </div>
             <div class="w3-row" style="margin-bottom: 10px;">
                 <div class="w3-container">
-                    <b><label class="w3-left"><fmt:message key="card" /></label></b>
+                    <b><label class="w3-left"><fmt:message key="card"/></label></b>
                     <input class="w3-input w3-border" type="text">
                 </div>
             </div>
             <div class="w3-row" style="margin-bottom: 10px;">
                 <div class="w3-container">
-                    <b><label class="w3-left"><fmt:message key="credits" /></label></b>
+                    <b><label class="w3-left"><fmt:message key="credits"/></label></b>
                     <input name="credits" value="0" class="w3-input w3-border" type="text">
                 </div>
             </div>
             <div class="w3-row" style="margin-bottom: 10px;">
                 <div class="w3-container">
-                    <b><label class="w3-left"><fmt:message key="expiration" /></label></b>
+                    <b><label class="w3-left"><fmt:message key="expiration"/></label></b>
                 </div>
             </div>
             <div class="w3-row-padding" style="margin-bottom: 10px;">
 
                 <div class=" w3-half">
                     <select class="w3-select">
-                    <option value="01">January</option>
-                    <option value="02">February </option>
-                    <option value="03">March</option>
-                    <option value="04">April</option>
-                    <option value="05">May</option>
-                    <option value="06">June</option>
-                    <option value="07">July</option>
-                    <option value="08">August</option>
-                    <option value="09">September</option>
-                    <option value="10">October</option>
-                    <option value="11">November</option>
-                    <option value="12">December</option>
-                </select></div>
+                        <option value="01">January</option>
+                        <option value="02">February</option>
+                        <option value="03">March</option>
+                        <option value="04">April</option>
+                        <option value="05">May</option>
+                        <option value="06">June</option>
+                        <option value="07">July</option>
+                        <option value="08">August</option>
+                        <option value="09">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                    </select></div>
                 <div class=" w3-half">
                     <select class="w3-select w3-third">
-                    <option value="16"> 2016</option>
-                    <option value="17"> 2017</option>
-                    <option value="18"> 2018</option>
-                    <option value="19"> 2019</option>
-                    <option value="20"> 2020</option>
-                    <option value="21"> 2021</option>
-                </select></div>
-
-
+                        <option value="16"> 2016</option>
+                        <option value="17"> 2017</option>
+                        <option value="18"> 2018</option>
+                        <option value="19"> 2019</option>
+                        <option value="20"> 2020</option>
+                        <option value="21"> 2021</option>
+                    </select>
+                </div>
             </div>
             <div class="w3-row">
                 <div class="w3-container">
-                    <input class="w3-button w3-block w3-black w3-hover-blue w3-center" style="padding: 10px 100px;" type="submit" value="<fmt:message key="confirm" />">
+                    <input class="w3-button w3-block w3-black w3-hover-blue w3-center" style="padding: 10px 100px;"
+                           type="submit" value="<fmt:message key="confirm" />">
                 </div>
             </div>
         </form>
-
     </div>
 
+    <!--FOOTER-->
     <c:import url="parts/footer.jsp"/>
 </div>
 </body>

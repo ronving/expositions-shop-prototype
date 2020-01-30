@@ -19,9 +19,9 @@ public class SQLExpositionDAO implements com.ronving.dao.interfaces.ExpositionDA
 
     private static String FIND_ALL = "SELECT * FROM expositions";
     private static String FIND_THEMES = "SELECT DISTINCT theme FROM expositions";
-    private static String FIND_EXPOSITION = "SELECT * FROM expositions WHERE theme=?";
-    private static String CREATE_EXPOSITION = "INSERT INTO expositions(hall_id, title, theme, description) VALUES(?,?,?,?)";
-    private static final String UPDATE_EXPOSITION = "UPDATE expositions SET hall_id = ?, title = ?, theme = ?, description = ? WHERE id = ?";
+    private static String FIND_EXPOSITION = "SELECT * FROM expositions WHERE hall_id=?";
+    private static String CREATE_EXPOSITION = "INSERT INTO expositions(hall_id, title, theme, description, img) VALUES(?,?,?,?,?)";
+    private static final String UPDATE_EXPOSITION = "UPDATE expositions SET hall_id = ?, title = ?, theme = ?, description = ?, img = ? WHERE id = ?";
     private static final String DELETE_EXPOSITION = "DELETE FROM expositions WHERE id = ?";
 
     public SQLExpositionDAO() {
@@ -64,10 +64,11 @@ public class SQLExpositionDAO implements com.ronving.dao.interfaces.ExpositionDA
     }
 
     @Override
-    public List<Exposition> findExpositionsByTheme() {
+    public List<Exposition> findExpositionsByHall(int hallId) {
         List<Exposition> expositions = new ArrayList<>();
         try (Connection connection = dataSourceManager.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_EXPOSITION);
+            preparedStatement.setInt(1, hallId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 expositions.add(buildExposition(resultSet));
@@ -98,7 +99,7 @@ public class SQLExpositionDAO implements com.ronving.dao.interfaces.ExpositionDA
         try (Connection connection = dataSourceManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_EXPOSITION)) {
             prepareExposition(preparedStatement, exposition);
-            preparedStatement.setInt(5, exposition.getId());
+            preparedStatement.setInt(6, exposition.getId());
             preparedStatement.executeUpdate();
             updated = true;
         } catch (SQLException e) {
@@ -128,6 +129,7 @@ public class SQLExpositionDAO implements com.ronving.dao.interfaces.ExpositionDA
                 .setTitle(resultSet.getString("title"))
                 .setTheme(resultSet.getString("theme"))
                 .setDescription(resultSet.getString("description"))
+                .setImgURL(resultSet.getString("img"))
                 .build();
         return exposition;
     }
@@ -137,5 +139,6 @@ public class SQLExpositionDAO implements com.ronving.dao.interfaces.ExpositionDA
         preparedStatement.setString(2, exposition.getTitle());
         preparedStatement.setString(3, exposition.getTheme());
         preparedStatement.setString(4, exposition.getDescription());
+        preparedStatement.setString(5, exposition.getImgURL());
     }
 }

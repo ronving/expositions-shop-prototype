@@ -36,7 +36,9 @@
     </style>
 </head>
 <body>
+<!--CONTENT-->
 <div class="w3-content" style="max-width:1500px">
+    <!--HEADER-->
     <c:import url="parts/header.jsp"/>
 
     <!--MENU-->
@@ -46,7 +48,8 @@
         <div class="w3-padding-32">
             <div class="w3-bar w3-border">
                 <a href="<c:url value="/profile"/>" class="w3-bar-item w3-button"><fmt:message key="profile"/></a>
-                <a href="<c:url value="/exposition"/>" class="w3-bar-item w3-button w3-light-grey"><fmt:message key="expositions"/></a>
+                <a href="<c:url value="/expositions"/>" class="w3-bar-item w3-button w3-light-grey"><fmt:message
+                        key="expositions"/></a>
                 <a href="<c:url value="/logout"/>" class="w3-bar-item w3-button"><fmt:message key="logout"/></a>
             </div>
         </div>
@@ -76,44 +79,51 @@
         </div>
     </div>
 
-    <!--CONTENT-->
+    <!--HALLS GRID-->
     <div class="w3-container">
-
-        <!-- PHOTO GRID (MODAL) -->
+        <!--PHOTO-->
         <div class="w3-row w3-grayscale-min">
             <div class="w3-row">
                 <c:forEach var="hall" items="${sessionScope.halls}">
                     <div class="w3-half">
                         <img src="${hall.getImgURL()}" style="width:100%"
-                             onclick="onClick(this, ${hall.getDateFrom()}, ${hall.getDateTo()})" alt="${hall.getTheme()}">
+                             onclick="onClick(this, ${hall.getId()}, '${hall.getDescription()}')"
+                             alt="${hall.getTheme()}">
                     </div>
                 </c:forEach>
             </div>
         </div>
 
-        <!-- MODAL FOR IMAGES ON CLICK-->
+        <!--MODAL FOR IMAGES ON CLICK-->
         <div id="modal" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
             <span class="w3-button w3-black w3-xxlarge w3-display-topright">×</span>
             <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
                 <img id="img" class="w3-image">
-                <h2 id="theme" class="w3-lobster"></h2>
-                <h4 id="details" class="w3-lobster"></h4>
-                <button class="w3-button w3-red"><fmt:message key="details" /></button>
+                <b><h1 id="theme" class="w3-lobster"></h1></b><br>
+                <h3 id="details" class="w3-lobster"></h3>
+                <form action="<c:url value="/hall"/>" method="post">
+                    <input id="info" type="hidden" name="id"/>
+                    <input class="w3-button w3-red" type="submit" value="submit"/>
+                </form>
             </div>
         </div>
     </div>
 
+    <!--FOOTER-->
     <c:import url="parts/footer.jsp"/>
 </div>
+
+<!--FULLSCREEN GALLERY ON CLICK-->
 <script>
     // Modal Image Gallery
-    function onClick(element, dateFrom, dateTo) {
+    function onClick(element, hallId, description) {
         document.getElementById("img").src = element.src;
         document.getElementById("modal").style.display = "block";
+        document.getElementById("info").value = hallId;
         var themeText = document.getElementById("theme");
         var detailsText = document.getElementById("details");
         themeText.innerHTML = element.alt;
-        detailsText.innerHTML = dateFrom + " - " + dateTo;
+        detailsText.innerHTML = description;
     }
 </script>
 </body>
