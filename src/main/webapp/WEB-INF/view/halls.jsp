@@ -103,7 +103,7 @@
                 <h3 id="details" class="w3-lobster"></h3>
                 <form action="<c:url value="/hall"/>" method="post">
                     <input id="info" type="hidden" name="id"/>
-                    <input class="w3-button w3-red" type="submit" value="submit"/>
+                    <input class="w3-button w3-red" type="submit" value="<fmt:message key="check"/>"/>
                 </form>
             </div>
         </div>

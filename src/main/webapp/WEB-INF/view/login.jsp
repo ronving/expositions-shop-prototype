@@ -11,10 +11,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="true" %>
 <%@ page isELIgnored="false" %>
-<fmt:setLocale value="${param.lang}"/>
+<fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="resources"/>
 
-<html>
+<html lang="${sessionScope.lang}">
 <head>
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">

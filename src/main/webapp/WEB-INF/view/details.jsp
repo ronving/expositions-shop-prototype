@@ -23,13 +23,14 @@
         .w3-lobster {
             font-family: "Lobster", serif;
         }
-        .w3-half img {
+
+        .w3-quarter img {
             opacity: 0.7;
             margin-bottom: -6px;
             cursor: pointer
         }
 
-        .w3-half img:hover {
+        .w3-quarter img:hover {
             opacity: 1;
             transition: 0.3s
         }
@@ -57,40 +58,48 @@
 
     <!--HALL INFO-->
     <div class="w3-row">
-        <!--EXPOSITIONS GRID-->
-        <div class="w3-col s9 w3-opacity w3-center">
-            <!--PHOTO-->
+        <div class="w3-col s6 w3-opacity-min w3-center">
+            <!--HALL DETAILS-->
             <div class="w3-row-padding w3-grayscale-min">
-                <div class="w3-row">
-                    <c:forEach var="expo" items="${sessionScope.expositions}">
-                        <div class="w3-half">
-                            <img src="${expo.getImgURL()}" style="width:100%"
-                                 onclick="onClick(this, '${expo.getTitle()}', '${expo.getTheme()}', '${expo.getDescription()}')"
-                                 alt="${hall.getTheme()}">
-                        </div>
-                    </c:forEach>
-                </div>
-            </div>
-            <!--MODAL FOR IMAGES ON CLICK-->
-            <div id="modal" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
-                <span class="w3-button w3-black w3-xxlarge w3-display-topright">×</span>
-                <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
-                    <img id="img" class="w3-image">
-                    <b><h1 id="title" class="w3-lobster w3-xxxlarge"></h1></b><br>
-                    Theme: <h3 id="theme" class="w3-lobster"></h3>
-                    <h3 id="description" class="w3-lobster"></h3>
-                </div>
+                <h1 class="w3-lobster w3-jumbo"><b>${sessionScope.hall.getTheme()}</b></h1>
+                <h2 class="w3-xxlarge"><b><fmt:message key="dateFrom"/>: </b><span class="w3-lobster w3-text-blue">${sessionScope.hall.getDateFrom()}</span></h2>
+                <h2 class="w3-xxlarge"><b><fmt:message key="dateTo"/>: </b><span class=" w3-text-blue w3-lobster">${sessionScope.hall.getDateTo()}</span></h2>
+                <h3 class="w3-xxlarge"><b><fmt:message key="description"/>: </b>${sessionScope.hall.getDescription()}</h3><br>
+                <form action="<c:url value="/order"/>" method="post">
+                    <input class="w3-button w3-red w3-xxlarge w3-lobster" type="submit" value="<fmt:message key="buy"/>" />
+                </form>
             </div>
         </div>
 
         <!--HALL -->
-        <div class="w3-col s3 w3-opacity w3-center w3-padding-16" style="max-height: 100%">
-            <img src="${sessionScope.hall.getImgURL()}" style="width:95%">
-            <h2 class="w3-lobster"><b>${sessionScope.hall.getTheme()}</b></h2>
-            <h4><b>Date From: </b>${sessionScope.hall.getDateFrom()}</h4>
-            <h4><b>Date To: </b>${sessionScope.hall.getDateTo()}</h4>
-            <h5><b>Description: </b>${sessionScope.hall.getDescription()}</h5>
-            <h3 class="w3-bottom"><b>Ticket Price: </b>${sessionScope.hall.getTicketPrice()}</h3>
+        <div class="w3-col s6 w3-center w3-padding-16">
+            <img class="w3-card-4" src="${sessionScope.hall.getImgURL()}" style="width:95%">
+        </div>
+    </div>
+
+    <!--EXPOSITIONS GRID-->
+    <div class="w3-row w3-center">
+        <h1 class="w3-center"><b><fmt:message key="expoFromHall"/></b></h1>
+        <c:forEach var="expo" items="${sessionScope.expositions}">
+            <div class="w3-quarter w3-center">
+                <div class="w3-container w3-margin w3-card">
+                <img src="${expo.getImgURL()}" style="width:95%"
+                     onclick="onClick(this, '${expo.getTitle()}', '${expo.getDescription()}')"
+                     alt="${hall.getTheme()}">
+                <h2>${expo.getTitle()}</h2>
+                <h4><fmt:message key="theme"/>: ${expo.getTheme()}</h4>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+
+    <!--MODAL FOR IMAGES ON CLICK-->
+    <div id="modal" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
+        <span class="w3-button w3-black w3-xxlarge w3-display-topright">×</span>
+        <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+            <img id="img" class="w3-image">
+            <b><h1 id="title" class="w3-lobster w3-xxxlarge"></h1></b><br>
+            <h3 id="description" class="w3-lobster"></h3>
         </div>
     </div>
 
@@ -101,15 +110,13 @@
 <!--FULLSCREEN GALLERY ON CLICK-->
 <script>
     // Modal Image Gallery
-    function onClick(element, title, theme, description) {
+    function onClick(element, title, description) {
         document.getElementById("img").src = element.src;
         document.getElementById("modal").style.display = "block";
-         var titleText = document.getElementById("title");
-         var themeText = document.getElementById("theme");
-         var descriptionText = document.getElementById("description");
-         titleText.innerHTML = title;
-         themeText.innerHTML = theme;
-         descriptionText.innerHTML = description;
+        var titleText = document.getElementById("title");
+        var descriptionText = document.getElementById("description");
+        titleText.innerHTML = title;
+        descriptionText.innerHTML = description;
     }
 </script>
 </body>

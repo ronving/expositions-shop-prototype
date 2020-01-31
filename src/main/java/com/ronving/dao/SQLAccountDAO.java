@@ -129,6 +129,9 @@ public class SQLAccountDAO implements AccountDAO {
     @Override
     public boolean updateAccount(Account account, int credits) {
         boolean payment = false;
+        if (account.getBalance()+credits < 0) {
+            return payment;
+        }
         try (Connection connection = dataSourceManager.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(ADD_CREDITS);
             preparedStatement.setString(1, account.getLogin());
@@ -137,6 +140,7 @@ public class SQLAccountDAO implements AccountDAO {
             preparedStatement.setString(4, account.getRole().getString());
             preparedStatement.setInt(5, account.getId());
             preparedStatement.executeUpdate();
+            payment = true;
         } catch (SQLException e) {
             LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         }

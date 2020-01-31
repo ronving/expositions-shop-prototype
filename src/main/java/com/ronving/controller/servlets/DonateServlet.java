@@ -13,15 +13,19 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(
-        name = "PurchaseServlet",
+        name = "DonateServlet",
         urlPatterns = "/donate")
-public class PurchaseServlet extends HttpServlet {
+public class DonateServlet extends HttpServlet {
     final static Logger LOGGER = Logger.getLogger(SQLAccountDAO.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        req.getRequestDispatcher("/WEB-INF/view/donate.jsp").forward(req,resp);
+        if (req.getSession().getAttribute("result") != null) {
+            req.getSession().removeAttribute("result");
+        }
+        req.getRequestDispatcher("/WEB-INF/view/donate.jsp").forward(req, resp);
     }
 
     @Override
@@ -30,11 +34,22 @@ public class PurchaseServlet extends HttpServlet {
 
         SQLAccountDAO dao = new SQLAccountDAO();
         Account account = (Account) session.getAttribute("account");
-        int credits =  Integer.parseInt(req.getParameter("credits"));
+        int credits = Integer.parseInt(req.getParameter("credits"));
 
-        dao.updateAccount(account, credits);
-        account.setBalance(account.getBalance()+credits);
-        session.setAttribute("account", account);
-        resp.sendRedirect("/calendar/profile");
+        if (credits <= 0) {
+            session.setAttribute("result", "fail");
+            req.getRequestDispatcher("/WEB-INF/view/donate.jsp").forward(req, resp);
+        } else {
+
+            dao.updateAccount(account, credits);
+
+            account.setBalance(account.getBalance() + credits);
+            session.setAttribute("account", account);
+            session.setAttribute("result", "success");
+
+
+            req.getRequestDispatcher("/WEB-INF/view/donate.jsp").forward(req, resp);
+        }
+        //resp.sendRedirect("calendar/profile");
     }
 }

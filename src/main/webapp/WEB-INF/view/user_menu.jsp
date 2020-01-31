@@ -45,18 +45,19 @@
 
     <!--ACCOUNT-->
     <div class="w3-row">
+
         <!--USER INFO-->
         <div class="w3-col s3 w3-opacity w3-center w3-padding-16">
             <img class="w3-image" style="max-width: 50%;" src="${pageContext.request.contextPath}/resources/img/user.png">
-            <h2>Login: <c:out value="${sessionScope.account.getLogin()}"/></h2>
-            <h2>Id: <c:out value="${sessionScope.account.getId()}"/></h2>
-            <h2>Role: <c:out value="${sessionScope.account.getRole()}"/></h2>
-            <h2>Balance: <c:out value="${sessionScope.account.getBalance()}"/></h2>
-            <a href="<c:url value="/donate"/>" class="w3-button w3-black w3-hover-blue">Add credits</a>
+            <h2><fmt:message key="id"/>: <c:out value="${sessionScope.account.getId()}"/></h2>
+            <h2><fmt:message key="login"/>: <c:out value="${sessionScope.account.getLogin()}"/></h2>
+            <h2><fmt:message key="role"/>: <c:out value="${sessionScope.account.getRole()}"/></h2>
+            <h2><fmt:message key="balance"/>: <c:out value="${sessionScope.account.getBalance()}"/></h2>
+            <a href="<c:url value="/donate"/>" class="w3-button w3-black w3-hover-blue"><fmt:message key="addCredits"/></a>
         </div>
 
         <!--ORDERS INFO-->
-        <div class="w3-col s9 w3-dark-grey w3-opacity w3-center">INFO</div>
+        <div class="w3-col s9 w3-dark-grey w3-opacity w3-center"><fmt:message key="orders"/></div>
     </div>
 
     <!--FOOTER-->
