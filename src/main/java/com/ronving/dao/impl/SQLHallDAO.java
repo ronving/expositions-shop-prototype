@@ -1,5 +1,6 @@
 package com.ronving.dao.impl;
 
+import com.ronving.dao.DataSourceManager;
 import com.ronving.dao.interfaces.HallDAO;
 import com.ronving.model.Hall;
 import com.ronving.model.builders.HallBuilder;

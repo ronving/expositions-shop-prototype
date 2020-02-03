@@ -1,5 +1,6 @@
 package com.ronving.dao.impl;
 
+import com.ronving.dao.DataSourceManager;
 import com.ronving.model.Exposition;
 import com.ronving.model.builders.ExpositionBuilder;
 import org.apache.log4j.Level;
