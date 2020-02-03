@@ -1,11 +1,10 @@
 package com.ronving.controller.servlets;
 
-import com.ronving.dao.SQLExpositionDAO;
-import com.ronving.dao.SQLHallDAO;
+import com.ronving.dao.impl.SQLDAOFactory;
+import com.ronving.dao.impl.SQLExpositionDAO;
+import com.ronving.dao.impl.SQLHallDAO;
 import com.ronving.model.Exposition;
 import com.ronving.model.Hall;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,13 +19,14 @@ import java.util.List;
         name = "HallServlet",
         urlPatterns = "/hall")
 public class HallServlet extends HttpServlet {
-    Logger LOGGER = Logger.getLogger(HallServlet.class);
+    private static SQLDAOFactory factory = new SQLDAOFactory();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        SQLHallDAO dao = new SQLHallDAO();
+        SQLHallDAO dao = factory.getHallDAO();
         Hall hall = null;
-LOGGER.log(Level.INFO, "PARAMETER IS " + req.getParameter("id"));
+
         if (req.getParameter("id") != null) {
             hall = dao.findHallById(Integer.parseInt(req.getParameter("id")));
         }
@@ -38,8 +38,8 @@ LOGGER.log(Level.INFO, "PARAMETER IS " + req.getParameter("id"));
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        SQLHallDAO hallDAO = new SQLHallDAO();
-        SQLExpositionDAO expositionDAO= new SQLExpositionDAO();
+        SQLHallDAO hallDAO = factory.getHallDAO();
+        SQLExpositionDAO expositionDAO= factory.getExpositionDAO();
         List<Exposition> expositions = null;
         Hall hall = null;
 
@@ -52,4 +52,5 @@ LOGGER.log(Level.INFO, "PARAMETER IS " + req.getParameter("id"));
         session.setAttribute("expositions", expositions);
         req.getRequestDispatcher("/WEB-INF/view/details.jsp").forward(req, resp);
     }
+
 }

@@ -1,6 +1,6 @@
 package com.ronving.controller.filters;
 
-import com.ronving.dao.SQLAccountDAO;
+import com.ronving.dao.impl.SQLAccountDAO;
 import com.ronving.model.Account;
 import com.ronving.model.roles.ROLE;
 
@@ -36,7 +36,7 @@ public class AuthFilter implements Filter {
         final String password = req.getParameter("password");
 
         @SuppressWarnings("unchecked") final AtomicReference<SQLAccountDAO> dao = (AtomicReference<SQLAccountDAO>) req.getServletContext().getAttribute("dao");
-
+        //@SuppressWarnings("unchecked")final SQLAccountDAO dao = factory.getAccountDAO();
         //Set locale for session
         if (req.getParameter("lang") != null) {
             session.setAttribute("lang", req.getParameter("lang"));
@@ -55,7 +55,8 @@ public class AuthFilter implements Filter {
             final ROLE role = (ROLE) session.getAttribute("role");
             res.sendRedirect("/calendar/profile");
 
-        } else if (dao.get().accountIsExist(login, password)) {
+        }
+        else if (dao.get().accountIsExist(login, password)) {
 
             Account account = dao.get().getAccountByLoginPassword(login, password);
             final ROLE role = dao.get().getRoleByLogin(login, password);
@@ -66,7 +67,8 @@ public class AuthFilter implements Filter {
             req.getSession().setAttribute("account", account);
             res.sendRedirect("/calendar/profile");
 
-        } else {
+        }
+        else {
             req.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, res);
         }
     }

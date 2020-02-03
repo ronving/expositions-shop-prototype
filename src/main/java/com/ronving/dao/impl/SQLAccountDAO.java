@@ -1,4 +1,4 @@
-package com.ronving.dao;
+package com.ronving.dao.impl;
 
 import com.ronving.dao.interfaces.IDataSourceManager;
 import com.ronving.dao.interfaces.AccountDAO;
@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SQLAccountDAO implements AccountDAO {
+    private static SQLAccountDAO instance;
     private IDataSourceManager dataSourceManager;
 
     final static Logger LOGGER = Logger.getLogger(SQLAccountDAO.class);
@@ -24,8 +25,15 @@ public class SQLAccountDAO implements AccountDAO {
     private static final String CREATE_ACCOUNT = "INSERT INTO accounts(id,login,password,balance,role) VALUES(?,?,?,?,?)";
     private static final String ADD_CREDITS = "UPDATE accounts SET login=?, password=?, balance=?, role=? WHERE id=?";
 
-    public SQLAccountDAO() {
-        this.dataSourceManager = DataSourceManager.getInstance();
+    private SQLAccountDAO() {
+        dataSourceManager = DataSourceManager.getInstance();
+    }
+
+    public static SQLAccountDAO getInstance() {
+        if (instance == null) {
+            instance = new SQLAccountDAO();
+        }
+        return instance;
     }
 
     @Override

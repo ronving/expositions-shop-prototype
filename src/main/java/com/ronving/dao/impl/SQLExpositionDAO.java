@@ -1,4 +1,4 @@
-package com.ronving.dao;
+package com.ronving.dao.impl;
 
 import com.ronving.model.Exposition;
 import com.ronving.model.builders.ExpositionBuilder;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SQLExpositionDAO implements com.ronving.dao.interfaces.ExpositionDAO {
+    private static SQLExpositionDAO instance;
     private DataSourceManager dataSourceManager;
 
     final static Logger LOGGER = Logger.getLogger(SQLExpositionDAO.class);
@@ -24,8 +25,15 @@ public class SQLExpositionDAO implements com.ronving.dao.interfaces.ExpositionDA
     private static final String UPDATE_EXPOSITION = "UPDATE expositions SET hall_id = ?, title = ?, theme = ?, description = ?, img = ? WHERE id = ?";
     private static final String DELETE_EXPOSITION = "DELETE FROM expositions WHERE id = ?";
 
-    public SQLExpositionDAO() {
+    private SQLExpositionDAO() {
         dataSourceManager = DataSourceManager.getInstance();
+    }
+
+    public static SQLExpositionDAO getInstance() {
+        if (instance == null) {
+            instance = new SQLExpositionDAO();
+        }
+        return instance;
     }
 
     @Override

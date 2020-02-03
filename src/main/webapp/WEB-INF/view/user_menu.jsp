@@ -57,7 +57,19 @@
         </div>
 
         <!--ORDERS INFO-->
-        <div class="w3-col s9 w3-dark-grey w3-opacity w3-center"><fmt:message key="orders"/></div>
+        <div class="w3-col s9 w3-opacity w3-center"><h2><fmt:message key="orders"/></h2><br>
+            <ul class="w3-ul w3-card-4">
+            <c:forEach var="order" items="${sessionScope.orders}">
+            <li class="w3-row-padding">
+<%--                <img src="img_avatar2.png" class="w3-bar-item w3-circle" style="width:85px">--%>
+                <div class="w3-container">
+                    <span class="w3-large"><fmt:message key="orderKey"/>: ${order.getOrderKey()}</span><br>
+                    <span><fmt:message key="hallId"/>: ${order.getHallId()}, <fmt:message key="hallTheme"/>: ${order.getHallTheme()}, <fmt:message key="dateTo"/>: ${order.getDateValid()}</span>
+                </div>
+            </li>
+            </c:forEach>
+            </ul>
+        </div>
     </div>
 
     <!--FOOTER-->

@@ -1,9 +1,11 @@
 package com.ronving.controller.servlets;
 
-import com.ronving.dao.SQLAccountDAO;
-import com.ronving.dao.SQLOrderDAO;
+import com.ronving.dao.impl.SQLAccountDAO;
+import com.ronving.dao.impl.SQLDAOFactory;
+import com.ronving.dao.impl.SQLOrderDAO;
 import com.ronving.model.Account;
 import com.ronving.model.Hall;
+import com.ronving.model.Order;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +19,7 @@ import java.io.IOException;
         name = "OrderServlet",
         urlPatterns = "/order")
 public class OrderServlet extends HttpServlet {
+    private static SQLDAOFactory factory = new SQLDAOFactory();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,11 +29,14 @@ public class OrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        SQLAccountDAO accountDAO = new SQLAccountDAO();
-        SQLOrderDAO orderDAO = new SQLOrderDAO();
+        SQLAccountDAO accountDAO = factory.getAccountDAO();
+        SQLOrderDAO orderDAO = factory.getOrderDAO();
 
+        Hall hall = (Hall) session.getAttribute("hall");
         Account account = (Account) session.getAttribute("account");
-        int ticketPrice = ((Hall) session.getAttribute("hall")).getTicketPrice();
+        Order order = new Order(hall.getDateTo(), hall.getId(), hall.getTheme());
+
+        int ticketPrice = hall.getTicketPrice();
 
         if (session.getAttribute("result") != null) {
             session.removeAttribute("result");
@@ -39,6 +45,7 @@ public class OrderServlet extends HttpServlet {
             boolean success = accountDAO.updateAccount(account, -ticketPrice);
             if (success) {
                 account.setBalance(account.getBalance() - ticketPrice);
+                orderDAO.saveOrder(order, account);
                 session.setAttribute("account", account);
                 session.setAttribute("result", "success");
             } else {

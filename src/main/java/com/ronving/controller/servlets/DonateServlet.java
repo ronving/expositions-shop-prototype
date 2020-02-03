@@ -1,6 +1,7 @@
 package com.ronving.controller.servlets;
 
-import com.ronving.dao.SQLAccountDAO;
+import com.ronving.dao.impl.SQLAccountDAO;
+import com.ronving.dao.impl.SQLDAOFactory;
 import com.ronving.model.Account;
 import org.apache.log4j.Logger;
 
@@ -16,6 +17,7 @@ import java.io.IOException;
         name = "DonateServlet",
         urlPatterns = "/donate")
 public class DonateServlet extends HttpServlet {
+    private static SQLDAOFactory factory = new SQLDAOFactory();
     final static Logger LOGGER = Logger.getLogger(SQLAccountDAO.class);
 
     @Override
@@ -32,7 +34,7 @@ public class DonateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final HttpSession session = req.getSession();
 
-        SQLAccountDAO dao = new SQLAccountDAO();
+        SQLAccountDAO dao = factory.getAccountDAO();
         Account account = (Account) session.getAttribute("account");
         int credits = Integer.parseInt(req.getParameter("credits"));
 

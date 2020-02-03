@@ -1,4 +1,4 @@
-package com.ronving.dao;
+package com.ronving.dao.impl;
 
 import com.ronving.dao.interfaces.HallDAO;
 import com.ronving.model.Hall;
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SQLHallDAO implements HallDAO {
+    private static SQLHallDAO instance;
     private DataSourceManager dataSourceManager;
 
     final static Logger LOGGER = Logger.getLogger(SQLHallDAO.class);
@@ -22,8 +23,15 @@ public class SQLHallDAO implements HallDAO {
     private static final String UPDATE_HALL = "UPDATE halls SET theme = ?, ticket_price = ?, date_from = ?, date_to = ?, img = ?, description=? WHERE id = ?";
     private static final String DELETE_HALL = "DELETE FROM halls WHERE id = ?";
 
-    public SQLHallDAO() {
+    private SQLHallDAO() {
         dataSourceManager = DataSourceManager.getInstance();
+    }
+
+    public static SQLHallDAO getInstance() {
+        if (instance == null) {
+            instance = new SQLHallDAO();
+        }
+        return instance;
     }
 
     @Override

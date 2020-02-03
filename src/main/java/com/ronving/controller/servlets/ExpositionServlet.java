@@ -1,6 +1,7 @@
 package com.ronving.controller.servlets;
 
-import com.ronving.dao.SQLHallDAO;
+import com.ronving.dao.impl.SQLDAOFactory;
+import com.ronving.dao.impl.SQLHallDAO;
 import com.ronving.model.Hall;
 
 import javax.servlet.ServletException;
@@ -16,10 +17,12 @@ import java.util.List;
         name = "ExpositionServlet",
         urlPatterns = "/expositions")
 public class ExpositionServlet extends HttpServlet {
+    private static SQLDAOFactory factory = new SQLDAOFactory();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final HttpSession session = req.getSession();
-        SQLHallDAO dao = new SQLHallDAO();
+        SQLHallDAO dao = factory.getHallDAO();
 
         int page = 1;
         int recordsPerPage = 4;

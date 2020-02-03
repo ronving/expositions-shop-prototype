@@ -1,4 +1,4 @@
-package com.ronving.dao;
+package com.ronving.dao.impl;
 
 import com.ronving.dao.interfaces.IDataSourceManager;
 import org.apache.commons.dbcp.BasicDataSource;

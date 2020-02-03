@@ -1,6 +1,7 @@
 package com.ronving.controller;
 
-import com.ronving.dao.SQLAccountDAO;
+import com.ronving.dao.impl.SQLAccountDAO;
+import com.ronving.dao.impl.SQLDAOFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -14,16 +15,17 @@ public class ContextListener implements ServletContextListener {
      * TRUEEEEEE database connector.
      */
     private AtomicReference<SQLAccountDAO> dao;
+    private static SQLDAOFactory factory = new SQLDAOFactory();
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
 
-        dao = new AtomicReference<>(new SQLAccountDAO());
-
-
-        //dao.get().addNewUser(new Account("admin", "admin",9999, ADMIN));
-        //dao.get().addNewUser(new Account("user", "user",0, USER));
-
+        dao = new AtomicReference<>(factory.getAccountDAO());
+//
+//
+//        dao.get().addNewUser(new Account("admin", "admin",9999, ADMIN));
+//        dao.get().addNewUser(new Account("user", "user",0, USER));
+//
         final ServletContext servletContext =
                 servletContextEvent.getServletContext();
 
