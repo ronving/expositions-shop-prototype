@@ -1,5 +1,8 @@
 package com.ronving.dao.interfaces;
 
+/**
+ * Factory for all DAO`s
+ */
 public interface DAOFactory {
     /**
      * @return instance of concrete AccountDAO implementation.

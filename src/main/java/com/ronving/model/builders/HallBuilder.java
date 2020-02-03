@@ -5,6 +5,9 @@ import com.ronving.model.Hall;
 
 import java.util.Date;
 
+/**
+ * Hall Builder
+ */
 public class HallBuilder {
     private Hall hall = new Hall();
 
@@ -43,6 +46,9 @@ public class HallBuilder {
         return this;
     }
 
+    /**
+     * @return new Hall
+     */
     public Hall build() {
         return hall;
     }

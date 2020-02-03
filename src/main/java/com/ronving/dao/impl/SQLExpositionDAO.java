@@ -19,7 +19,6 @@ public class SQLExpositionDAO implements com.ronving.dao.interfaces.ExpositionDA
     final static Logger LOGGER = Logger.getLogger(SQLExpositionDAO.class);
 
     private static String FIND_ALL = "SELECT * FROM expositions";
-    private static String FIND_THEMES = "SELECT DISTINCT theme FROM expositions";
     private static String FIND_EXPOSITION = "SELECT * FROM expositions WHERE hall_id=?";
     private static String CREATE_EXPOSITION = "INSERT INTO expositions(hall_id, title, theme, description, img) VALUES(?,?,?,?,?)";
     private static final String UPDATE_EXPOSITION = "UPDATE expositions SET hall_id = ?, title = ?, theme = ?, description = ?, img = ? WHERE id = ?";
@@ -49,26 +48,6 @@ public class SQLExpositionDAO implements com.ronving.dao.interfaces.ExpositionDA
             LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
         }
         return expositions;
-    }
-
-    @Override
-    public Exposition findExposition(String query) {
-        return null;
-    }
-
-    @Override
-    public List<String> findThemes() {
-        List<String> themes = new ArrayList<>();
-        try (Connection connection = dataSourceManager.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_THEMES);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                themes.add(resultSet.getString("theme"));
-            }
-        } catch (SQLException e) {
-            LOGGER.log(Level.ERROR, "SQL Exception occured in " + getClass().getSimpleName(), e);
-        }
-        return themes;
     }
 
     @Override

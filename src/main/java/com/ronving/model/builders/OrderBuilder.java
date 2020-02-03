@@ -4,6 +4,9 @@ import com.ronving.model.Order;
 
 import java.util.Date;
 
+/**
+ * Order Builder
+ */
 public class OrderBuilder {
     private Order order = new Order();
 
@@ -27,6 +30,9 @@ public class OrderBuilder {
         return this;
     }
 
+    /**
+     * @return new Hall
+     */
     public Order build() {
         return order;
     }

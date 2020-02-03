@@ -1,7 +1,9 @@
-package com.ronving.controller;
+package com.ronving.controller.listeners;
 
 import com.ronving.dao.impl.SQLAccountDAO;
 import com.ronving.dao.impl.SQLDAOFactory;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -11,15 +13,13 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @WebListener
 public class ContextListener implements ServletContextListener {
-    /**
-     * TRUEEEEEE database connector.
-     */
+    private final static Logger LOGGER = Logger.getLogger(SessionListener.class);
     private AtomicReference<SQLAccountDAO> dao;
     private static SQLDAOFactory factory = new SQLDAOFactory();
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-
+        LOGGER.log(Level.INFO, "Context initialized");
         dao = new AtomicReference<>(factory.getAccountDAO());
 //
 //
@@ -34,6 +34,7 @@ public class ContextListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
+        LOGGER.log(Level.INFO, "Context destroyed");
         dao = null;
     }
 

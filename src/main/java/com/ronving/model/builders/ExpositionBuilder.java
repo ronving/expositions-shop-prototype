@@ -2,6 +2,9 @@ package com.ronving.model.builders;
 
 import com.ronving.model.Exposition;
 
+/**
+ * Exposition Builder
+ */
 public class ExpositionBuilder {
     private Exposition exposition = new Exposition();
 
@@ -35,6 +38,9 @@ public class ExpositionBuilder {
         return this;
     }
 
+    /**
+     * @return new Exposition
+     */
     public Exposition build() {
         return exposition;
     }
