@@ -1,0 +1,3 @@
+"id";"login";"password";"balance";"role"
+1;"admin";"admin";9999;"ADMIN"
+2;"user";"user";0;"USER"

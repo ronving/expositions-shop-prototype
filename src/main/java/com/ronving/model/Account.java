@@ -17,7 +17,7 @@ public class Account {
     }
 
     /**
-     * Account constructor for all fields.
+     * Account constructor for all but without id.
      */
     public Account(int id, String login, String password, int balance, ROLE role) {
         this.id = id;

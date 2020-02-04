@@ -86,7 +86,7 @@
             <div class="w3-row">
                 <c:forEach var="hall" items="${sessionScope.halls}">
                     <div class="w3-half">
-                        <img src="${hall.getImgURL()}" style="width:100%"
+                        <img src="${pageContext.request.contextPath}${hall.getImgURL()}" style="width:100%"
                              onclick="onClick(this, ${hall.getId()}, '${hall.getDescription()}')"
                              alt="${hall.getTheme()}">
                     </div>

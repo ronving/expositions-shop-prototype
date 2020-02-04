@@ -1,7 +1,5 @@
 package com.ronving.controller.filters;
 
-import org.apache.log4j.Logger;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -10,11 +8,9 @@ import java.io.IOException;
 
 @WebFilter(filterName = "LocaleSessionFilter", urlPatterns = {"/*"})
 public class LocaleSessionFilter implements Filter {
-    Logger LOGGER = Logger.getLogger(LocaleSessionFilter.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
@@ -29,6 +25,5 @@ public class LocaleSessionFilter implements Filter {
 
     @Override
     public void destroy() {
-
     }
 }

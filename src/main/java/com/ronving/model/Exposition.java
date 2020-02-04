@@ -4,7 +4,6 @@ public class Exposition {
     private int id;
     private int hallId;
     private String title;
-    private String theme;
     private String description;
     private String imgURL;
 
@@ -17,11 +16,10 @@ public class Exposition {
     /**
      * Expo constructor for all fields.
      */
-    public Exposition(int id, int hallId, String title, String theme, String description, String imgURL) {
+    public Exposition(int id, int hallId, String title, String description, String imgURL) {
         this.id = id;
         this.hallId = hallId;
         this.title = title;
-        this.theme = theme;
         this.description = description;
         this.imgURL = imgURL;
     }
@@ -78,24 +76,6 @@ public class Exposition {
      */
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    /**
-     * Getter for Expo theme
-     *
-     * @return Expo theme
-     */
-    public String getTheme() {
-        return theme;
-    }
-
-    /**
-     * Setter for Expo Theme
-     *
-     * @param theme
-     */
-    public void setTheme(String theme) {
-        this.theme = theme;
     }
 
     /**

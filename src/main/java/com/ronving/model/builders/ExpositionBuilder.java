@@ -23,11 +23,6 @@ public class ExpositionBuilder {
         return this;
     }
 
-    public ExpositionBuilder setTheme(String theme) {
-        exposition.setTheme(theme);
-        return this;
-    }
-
     public ExpositionBuilder setDescription(String description) {
         exposition.setDescription(description);
         return this;

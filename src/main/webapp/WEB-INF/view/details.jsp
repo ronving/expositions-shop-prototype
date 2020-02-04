@@ -64,7 +64,7 @@
                 <h1 class="w3-lobster w3-jumbo"><b>${sessionScope.hall.getTheme()}</b></h1>
                 <h2 class="w3-xxlarge"><b><fmt:message key="dateFrom"/>: </b><span class="w3-lobster w3-text-blue">${sessionScope.hall.getDateFrom()}</span></h2>
                 <h2 class="w3-xxlarge"><b><fmt:message key="dateTo"/>: </b><span class=" w3-text-blue w3-lobster">${sessionScope.hall.getDateTo()}</span></h2>
-                <h3 class="w3-xxlarge"><b><fmt:message key="description"/>: </b>${sessionScope.hall.getDescription()}</h3><br>
+                <h3 class="w3-xlarge"><b><fmt:message key="description"/>: </b>${sessionScope.hall.getDescription()}</h3><br>
                 <form action="<c:url value="/order"/>" method="post">
                     <input class="w3-button w3-red w3-xxlarge w3-lobster" type="submit" value="<fmt:message key="buy"/>" />
                 </form>
@@ -73,7 +73,7 @@
 
         <!--HALL -->
         <div class="w3-col s6 w3-center w3-padding-16">
-            <img class="w3-card-4" src="${sessionScope.hall.getImgURL()}" style="width:95%">
+            <img class="w3-card-4" src="${pageContext.request.contextPath}${sessionScope.hall.getImgURL()}" style="width:95%">
         </div>
     </div>
 
@@ -83,18 +83,17 @@
         <c:forEach var="expo" items="${sessionScope.expositions}">
             <div class="w3-quarter w3-center">
                 <div class="w3-container w3-margin w3-card">
-                <img src="${expo.getImgURL()}" style="width:95%"
+                <img src="${pageContext.request.contextPath}${expo.getImgURL()}" style="width:95%"
                      onclick="onClick(this, '${expo.getTitle()}', '${expo.getDescription()}')"
                      alt="${hall.getTheme()}">
                 <h2>${expo.getTitle()}</h2>
-                <h4><fmt:message key="theme"/>: ${expo.getTheme()}</h4>
                 </div>
             </div>
         </c:forEach>
     </div>
 
     <!--MODAL FOR IMAGES ON CLICK-->
-    <div id="modal" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
+    <div id="modal" class="w3-modal w3-white" style="padding-top:0" onclick="this.style.display='none'">
         <span class="w3-button w3-black w3-xxlarge w3-display-topright">×</span>
         <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
             <img id="img" class="w3-image">

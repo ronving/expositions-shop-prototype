@@ -29,9 +29,10 @@ public class HallServlet extends HttpServlet {
 
         if (req.getParameter("id") != null) {
             hall = dao.findHallById(Integer.parseInt(req.getParameter("id")));
+            session.setAttribute("hall", hall);
         }
 
-        session.setAttribute("hall", hall);
+
         req.getRequestDispatcher("/WEB-INF/view/details.jsp").forward(req, resp);
     }
 
@@ -46,10 +47,11 @@ public class HallServlet extends HttpServlet {
         if (req.getParameter("id") != null) {
             hall = hallDAO.findHallById(Integer.parseInt(req.getParameter("id")));
             expositions = expositionDAO.findExpositionsByHall(hall.getId());
+            session.setAttribute("hall", hall);
+            session.setAttribute("expositions", expositions);
         }
 
-        session.setAttribute("hall", hall);
-        session.setAttribute("expositions", expositions);
+
         req.getRequestDispatcher("/WEB-INF/view/details.jsp").forward(req, resp);
     }
 

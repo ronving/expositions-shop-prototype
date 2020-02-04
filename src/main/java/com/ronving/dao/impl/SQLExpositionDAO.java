@@ -21,8 +21,8 @@ public class SQLExpositionDAO implements com.ronving.dao.interfaces.ExpositionDA
 
     private static String FIND_ALL = "SELECT * FROM expositions";
     private static String FIND_EXPOSITION = "SELECT * FROM expositions WHERE hall_id=?";
-    private static String CREATE_EXPOSITION = "INSERT INTO expositions(hall_id, title, theme, description, img) VALUES(?,?,?,?,?)";
-    private static final String UPDATE_EXPOSITION = "UPDATE expositions SET hall_id = ?, title = ?, theme = ?, description = ?, img = ? WHERE id = ?";
+    private static String CREATE_EXPOSITION = "INSERT INTO expositions(hall_id, title, description, img) VALUES(?,?,?,?,?)";
+    private static final String UPDATE_EXPOSITION = "UPDATE expositions SET hall_id = ?, title = ?, description = ?, img = ? WHERE id = ?";
     private static final String DELETE_EXPOSITION = "DELETE FROM expositions WHERE id = ?";
 
     private SQLExpositionDAO() {
@@ -87,7 +87,7 @@ public class SQLExpositionDAO implements com.ronving.dao.interfaces.ExpositionDA
         try (Connection connection = dataSourceManager.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_EXPOSITION)) {
             prepareExposition(preparedStatement, exposition);
-            preparedStatement.setInt(6, exposition.getId());
+            preparedStatement.setInt(5, exposition.getId());
             preparedStatement.executeUpdate();
             updated = true;
         } catch (SQLException e) {
@@ -115,7 +115,6 @@ public class SQLExpositionDAO implements com.ronving.dao.interfaces.ExpositionDA
                 .setId(resultSet.getInt("id"))
                 .setHallId(resultSet.getInt("hall_id"))
                 .setTitle(resultSet.getString("title"))
-                .setTheme(resultSet.getString("theme"))
                 .setDescription(resultSet.getString("description"))
                 .setImgURL(resultSet.getString("img"))
                 .build();
@@ -125,8 +124,7 @@ public class SQLExpositionDAO implements com.ronving.dao.interfaces.ExpositionDA
     private void prepareExposition(PreparedStatement preparedStatement, Exposition exposition) throws SQLException {
         preparedStatement.setInt(1, exposition.getHallId());
         preparedStatement.setString(2, exposition.getTitle());
-        preparedStatement.setString(3, exposition.getTheme());
-        preparedStatement.setString(4, exposition.getDescription());
-        preparedStatement.setString(5, exposition.getImgURL());
+        preparedStatement.setString(3, exposition.getDescription());
+        preparedStatement.setString(4, exposition.getImgURL());
     }
 }

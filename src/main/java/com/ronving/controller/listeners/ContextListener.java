@@ -21,11 +21,10 @@ public class ContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         LOGGER.log(Level.INFO, "Context initialized");
         dao = new AtomicReference<>(factory.getAccountDAO());
-//
-//
+
 //        dao.get().addNewUser(new Account("admin", "admin",9999, ADMIN));
 //        dao.get().addNewUser(new Account("user", "user",0, USER));
-//
+
         final ServletContext servletContext =
                 servletContextEvent.getServletContext();
 
@@ -37,6 +36,4 @@ public class ContextListener implements ServletContextListener {
         LOGGER.log(Level.INFO, "Context destroyed");
         dao = null;
     }
-
-
 }
