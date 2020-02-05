@@ -52,7 +52,7 @@
             <h2><fmt:message key="id"/>: <c:out value="${sessionScope.account.getId()}"/></h2>
             <h2><fmt:message key="login"/>: <c:out value="${sessionScope.account.getLogin()}"/></h2>
             <h2><fmt:message key="role"/>: <c:out value="${sessionScope.account.getRole()}"/></h2>
-            <h2><fmt:message key="balance"/>: <c:out value="${sessionScope.account.getBalance()}"/></h2>
+            <h2><fmt:message key="balance"/>: <c:out value="${sessionScope.account.getBalance()}"/>$</h2>
             <a href="<c:url value="/donate"/>" class="w3-button w3-black w3-hover-blue"><fmt:message key="addCredits"/></a>
         </div>
 
@@ -61,7 +61,6 @@
             <ul class="w3-ul w3-card-4">
             <c:forEach var="order" items="${sessionScope.orders}">
             <li class="w3-row-padding">
-<%--                <img src="img_avatar2.png" class="w3-bar-item w3-circle" style="width:85px">--%>
                 <div class="w3-container">
                     <span class="w3-large"><fmt:message key="orderKey"/>: ${order.getOrderKey()}</span><br>
                     <span><fmt:message key="hallId"/>: ${order.getHallId()}, <fmt:message key="hallTheme"/>: ${order.getHallTheme()}, <fmt:message key="dateTo"/>: ${order.getDateValid()}</span>

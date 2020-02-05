@@ -39,7 +39,7 @@
         <!--LOGIN FORM-->
         <form method="post" class="w3-container w3-center"
               style="width: 25%; text-align: center; display: inline-block;">
-            <input class="w3-input w3-border w3-center" style="margin-bottom: 5px;" type="text" required
+            <input class="w3-input w3-border w3-center" style="margin-bottom: 5px;" type="login" autocomplete="off" required
                    placeholder="<fmt:message key="login"/>" name="login">
             <input class="w3-input w3-border w3-center" style="margin-bottom: 10px;" type="password" required
                    placeholder="<fmt:message key="password"/>" name="password">

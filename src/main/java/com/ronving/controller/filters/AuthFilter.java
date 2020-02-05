@@ -36,7 +36,7 @@ public class AuthFilter implements Filter {
         final String password = req.getParameter("password");
 
         @SuppressWarnings("unchecked") final AtomicReference<SQLAccountDAO> dao = (AtomicReference<SQLAccountDAO>) req.getServletContext().getAttribute("dao");
-        //@SuppressWarnings("unchecked")final SQLAccountDAO dao = factory.getAccountDAO();
+
         //Set locale for session
         if (req.getParameter("lang") != null) {
             session.setAttribute("lang", req.getParameter("lang"));

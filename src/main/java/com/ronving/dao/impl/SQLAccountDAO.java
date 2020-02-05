@@ -67,12 +67,6 @@ public class SQLAccountDAO implements AccountDAO {
             preparedStatement.setString(1, login);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-//                String result = resultSet.getString("role");
-//                if (result.equals("USER")) {
-//                    role = ROLE.USER;
-//                } else if (result.equals("ADMIN")) {
-//                    role = ROLE.ADMIN;
-//                }
                 role = identifyRole(resultSet);
             }
         } catch (SQLException e) {
